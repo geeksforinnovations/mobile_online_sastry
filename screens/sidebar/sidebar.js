@@ -6,11 +6,12 @@ import Pujas from '../pujas/pujas';
 import PujaDetails from '../pujaDetails/pujaDetails';
 import CustomSideBar from './customSidebar';
 import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import { HomeStack } from '../../app/navigation/homeStack';
 
 
 const MyDrawerNavigator = createDrawerNavigator({
     HomeStack: {
-        screen: PujaDetails,
+        screen: HomeStack,
         navigationOptions: {
             drawerLabel: 'Pujas',
             drawerIcon: ({ tintColor }) => (
@@ -73,6 +74,7 @@ const MyDrawerNavigator = createDrawerNavigator({
     }
 },
     {
+        initialRouteName:'HomeStack',
         contentComponent: CustomSideBar,
     }
 );

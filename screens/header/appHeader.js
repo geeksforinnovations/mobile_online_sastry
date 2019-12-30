@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 export default class AppHeader extends Component {
+    constructor(props){
+        super(props)
+    }
     render() {
         return (
 
             <Header >
                 <Left>
-                    <Button transparent >
+                    <Button transparent onPress={() => this.props.navigation.goBack(null)} >
                         <Icon name='arrow-back' />
                     </Button>
                 </Left>

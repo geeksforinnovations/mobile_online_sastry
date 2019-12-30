@@ -7,26 +7,28 @@ import {
     Text,
     StatusBar,
 } from 'react-native';
+import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+
 
 import {
-    Header,
     LearnMoreLinks,
     Colors,
     DebugInstructions,
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import AppHeader from '../header/appHeader';
 
 
 export default class Pujas extends React.Component {
-    static navigationOptions = {
-        drawerLabel: 'Home2',
-        
-    };
+    constructor(props){
+        super(props)
+    }
     render() {
         return (
             <>
-                <StatusBar barStyle="dark-content" />
+                {/* <StatusBar barStyle="dark-content" /> */}
                 <SafeAreaView>
+                    <AppHeader {...this.props}></AppHeader>
                     <ScrollView
                         contentInsetAdjustmentBehavior="automatic"
                         style={styles.scrollView}>
@@ -35,7 +37,12 @@ export default class Pujas extends React.Component {
 
                             <View style={styles.sectionContainer}>
                                 <Text style={styles.sectionTitle}>this is all pujas</Text>
+                                <Button
 
+                                    onPress={() => this.props.navigation.navigate('PujaDetails')}
+                                >
+                                    <Text style={styles.sectionTitle}>Go to PujaDetails</Text>
+                                </Button>
                             </View>
                         </View>
                     </ScrollView>
@@ -50,7 +57,7 @@ export default class Pujas extends React.Component {
 const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: Colors.lighter,
-        
+
     },
     engine: {
         position: 'absolute',
@@ -58,10 +65,10 @@ const styles = StyleSheet.create({
     },
     body: {
         backgroundColor: Colors.white,
-        marginTop:50,
-        flex: 1, 
-        alignItems: 'center', 
-        justifyContent: 'center' 
+        // marginTop:50,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     sectionContainer: {
         marginTop: 32,

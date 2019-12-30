@@ -5,36 +5,40 @@ import {
     ScrollView,
     View,
     Text,
-    StatusBar,
 } from 'react-native';
 
 import {
-    Header,
-    LearnMoreLinks,
     Colors,
-    DebugInstructions,
-    ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import AppHeader from '../header/appHeader';
+import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 
 
 export default class PujaDetails extends React.Component {
+    constructor(props){
+        super(props)
+    }
 
     render() {
         return (
             <>
 
-                <SafeAreaView style={{ flex: 1, justifyContent:"center" }}>
-                    <AppHeader></AppHeader>
+                <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
+                    <AppHeader {...this.props}></AppHeader>
                     <ScrollView
                         // contentInsetAdjustmentBehavior="automatic"
                         style={styles.scrollView}>
 
-                        <View style={{ flex: 1, justifyContent:"center", alignItems:'center' }}>
+                        <View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
 
 
                             <Text style={styles.sectionTitle}>this is puja details</Text>
+                            <Button
 
+                                onPress={() => this.props.navigation.navigate('Checkout')}
+                            >
+                                <Text style={styles.sectionTitle}>Go to Checkout</Text>
+                            </Button>
 
                         </View>
                     </ScrollView>
@@ -49,8 +53,8 @@ export default class PujaDetails extends React.Component {
 const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: Colors.lighter,
-        borderColor:'red',
-        borderWidth:1
+        borderColor: 'red',
+        borderWidth: 1
     },
     engine: {
         position: 'absolute',

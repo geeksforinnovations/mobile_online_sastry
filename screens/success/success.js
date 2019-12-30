@@ -5,45 +5,40 @@ import {
     ScrollView,
     View,
     Text,
-    StatusBar,
 } from 'react-native';
+
+import {
+    Colors,
+} from 'react-native/Libraries/NewAppScreen';
+import AppHeader from '../header/appHeader';
 import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 
 
-import {
-    LearnMoreLinks,
-    Colors,
-    DebugInstructions,
-    ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import AppHeader from '../header/appHeader';
-
-
-export default class UserDetails extends React.Component {
+export default class SuccessPage extends React.Component {
     constructor(props){
         super(props)
     }
     render() {
         return (
             <>
-                {/* <StatusBar barStyle="dark-content" /> */}
-                <SafeAreaView>
-                    <AppHeader {...this.props}></AppHeader>
+
+                <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
+                    <AppHeader {...this.props} ></AppHeader>
                     <ScrollView
-                        contentInsetAdjustmentBehavior="automatic"
+                        // contentInsetAdjustmentBehavior="automatic"
                         style={styles.scrollView}>
 
-                        <View style={styles.body}>
+                        <View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
 
-                            <View style={styles.sectionContainer}>
-                                <Text style={styles.sectionTitle}>this is User details</Text>
-                                <Button
 
-                                    onPress={() => this.props.navigation.navigate('PujaDetails')}
-                                >
-                                    <Text style={styles.sectionTitle}>Go to Success</Text>
-                                </Button>
-                            </View>
+                            <Text style={styles.sectionTitle}>this is success page</Text>
+                            <Button
+
+                                onPress={() => this.props.navigation.navigate('Hoe')}
+                            >
+                                <Text style={styles.sectionTitle}>Go to Checkout</Text>
+                            </Button>
+
                         </View>
                     </ScrollView>
                 </SafeAreaView>
@@ -57,7 +52,8 @@ export default class UserDetails extends React.Component {
 const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: Colors.lighter,
-
+        borderColor: 'red',
+        borderWidth: 1
     },
     engine: {
         position: 'absolute',
@@ -65,13 +61,10 @@ const styles = StyleSheet.create({
     },
     body: {
         backgroundColor: Colors.white,
-        // marginTop:50,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+
     },
     sectionContainer: {
-        marginTop: 32,
+        // marginTop: 32,
         paddingHorizontal: 24,
     },
     sectionTitle: {

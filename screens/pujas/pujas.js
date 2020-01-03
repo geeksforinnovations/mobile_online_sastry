@@ -28,7 +28,7 @@ export default class Pujas extends React.Component {
             <>
                 {/* <StatusBar barStyle="dark-content" /> */}
                 <SafeAreaView>
-                    <AppHeader {...this.props}></AppHeader>
+                    <AppHeader left={'menu'} right={null} title={'Pujas'} {...this.props}></AppHeader>
                     <ScrollView
                         contentInsetAdjustmentBehavior="automatic"
                         style={styles.scrollView}>

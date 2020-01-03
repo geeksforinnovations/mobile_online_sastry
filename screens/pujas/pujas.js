@@ -16,7 +16,7 @@ import {
     DebugInstructions,
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import AppHeader from '../header/appHeader';
+import {G4IHeader} from '../header/appHeader';
 
 
 export default class Pujas extends React.Component {
@@ -28,7 +28,7 @@ export default class Pujas extends React.Component {
             <>
                 {/* <StatusBar barStyle="dark-content" /> */}
                 <SafeAreaView>
-                    <AppHeader left={'menu'} right={null} title={'Pujas'} {...this.props}></AppHeader>
+                    <G4IHeader left={'menu'} right={null} title={'Pujas'} {...this.props}></G4IHeader>
                     <ScrollView
                         contentInsetAdjustmentBehavior="automatic"
                         style={styles.scrollView}>

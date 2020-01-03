@@ -79,5 +79,5 @@ const MyDrawerNavigator = createDrawerNavigator({
     }
 );
 
-const SideBar = createAppContainer(MyDrawerNavigator)
-export default SideBar
+const RootApp = createAppContainer(MyDrawerNavigator)
+export default RootApp

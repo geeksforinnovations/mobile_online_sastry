@@ -193,7 +193,7 @@ export default {
   tabBarTextColor: platform === PLATFORM.IOS ? '#6b6b6b' : '#b3c7f9',
   tabBarTextSize: platform === PLATFORM.IOS ? 14 : 11,
   activeTab: platform === PLATFORM.IOS ? '#007aff' : '#fff',
-  sTabBarActiveTextColor: '#007aff',
+  sTabBarActiveTextColor: '#e69b3a',
   tabBarActiveTextColor: platform === PLATFORM.IOS ? '#007aff' : '#fff',
   tabActiveBgColor: platform === PLATFORM.IOS ? '#cde1f9' : '#e69b3a',
 
@@ -291,7 +291,7 @@ export default {
   tabFontSize: 15,
 
   // Text
-  textColor: 'red',
+  textColor: '#2E4053',
   inverseTextColor: '#fff',
   noteFontSize: 14,
   get defaultTextColor() {

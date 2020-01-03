@@ -164,7 +164,7 @@ export default {
   tabBarTextColor: '#bfc6ea',
   tabBarTextSize: 11,
   activeTab: '#fff',
-  sTabBarActiveTextColor: '#007aff',
+  sTabBarActiveTextColor: '#e69b3a',
   tabBarActiveTextColor: '#fff',
   tabActiveBgColor: '#e69b3a',
 
@@ -261,7 +261,7 @@ export default {
   tabFontSize: 15,
 
   // Text
-  textColor: 'red',
+  textColor: '#2E4053',
   inverseTextColor: '#fff',
   noteFontSize: 14,
   get defaultTextColor() {

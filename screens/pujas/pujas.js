@@ -4,46 +4,42 @@ import {
     StyleSheet,
     ScrollView,
     View,
-    Text,
+    Image,
+    // Text,
     StatusBar,
 } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 
 
-import {
-    LearnMoreLinks,
-    Colors,
-    DebugInstructions,
-    ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import {G4IHeader} from '../header/appHeader';
+
+import { G4IHeader } from '../header/appHeader';
+import { Puja } from '../../models'
+import PujaCard from './pujaCard'
 
 
 export default class Pujas extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
+        this.pujas = [new Puja(1, 'Annaprasanna'), new Puja(11, 'Kalyanam'),
+        new Puja(12, 'Vinayaka Chaviti'), new Puja(15, 'Annaprasanna'), new Puja(14, 'Annaprasanna'),]
     }
     render() {
+        const img = {
+            uri:
+                'https://picsum.photos/200',
+        };
+        const logo = img//require("../../../assets/logo.png");
+        const cardImage = img///require("../../../assets/drawer-cover.png");
         return (
             <>
-                {/* <StatusBar barStyle="dark-content" /> */}
                 <SafeAreaView>
                     <G4IHeader left={'menu'} right={null} title={'Pujas'} {...this.props}></G4IHeader>
-                    <ScrollView
-                        contentInsetAdjustmentBehavior="automatic"
-                        style={styles.scrollView}>
-
-                        <View style={styles.body}>
-
-                            <View style={styles.sectionContainer}>
-                                <Text style={styles.sectionTitle}>this is all pujas</Text>
-                                <Button
-
-                                    onPress={() => this.props.navigation.navigate('PujaDetails')}
-                                >
-                                    <Text style={styles.sectionTitle}>Go to PujaDetails</Text>
-                                </Button>
-                            </View>
+                    <ScrollView contentInsetAdjustmentBehavior="automatic"  >
+                        <View >
+                            {
+                                this.pujas.map((puja, i) => {
+                                    return (<PujaCard keyVal={`puja${i}`} puja={puja}></PujaCard>)
+                                })
+                            }
                         </View>
                     </ScrollView>
                 </SafeAreaView>
@@ -52,48 +48,3 @@ export default class Pujas extends React.Component {
     }
 
 }
-
-
-const styles = StyleSheet.create({
-    scrollView: {
-        backgroundColor: Colors.lighter,
-
-    },
-    engine: {
-        position: 'absolute',
-        right: 0,
-    },
-    body: {
-        backgroundColor: Colors.white,
-        // marginTop:50,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    sectionContainer: {
-        marginTop: 32,
-        paddingHorizontal: 24,
-    },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: Colors.black,
-    },
-    sectionDescription: {
-        marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
-        color: Colors.dark,
-    },
-    highlight: {
-        fontWeight: '700',
-    },
-    footer: {
-        color: Colors.dark,
-        fontSize: 12,
-        fontWeight: '600',
-        padding: 4,
-        paddingRight: 12,
-        textAlign: 'right',
-    },
-});

@@ -35,11 +35,10 @@ export default class PujaCard extends React.Component {
             uri:
                 'https://picsum.photos/200',
         };
-        const logo = img//require("../../../assets/logo.png");
-        const cardImage = img///require("../../../assets/drawer-cover.png");
+        const logo = img
         const {puja} = this.props;
         return (
-            <Card key={this.props.keyVal} >
+            <Card  >
                 <CardItem cardBody style={{ margin: 5}}>
                     <Left >
                         <Thumbnail square source={logo} />
@@ -77,7 +76,7 @@ export default class PujaCard extends React.Component {
                         </Button>
                     </Body>
                     <Right>
-                        <Button>
+                        <Button onPress={this.props.onBook}>
                             
                             <Text>Book</Text>
                         </Button>

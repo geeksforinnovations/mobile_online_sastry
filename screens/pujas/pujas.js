@@ -20,15 +20,14 @@ export default class Pujas extends React.Component {
     constructor(props) {
         super(props)
         this.pujas = [new Puja(1, 'Annaprasanna'), new Puja(11, 'Kalyanam'),
-        new Puja(12, 'Vinayaka Chaviti'), new Puja(15, 'Annaprasanna'), new Puja(14, 'Annaprasanna'),]
+        new Puja(12, 'Vinayaka Chaviti'), new Puja(152, 'Annaprasanna'), new Puja(14, 'Annaprasanna'),]
+    }
+    OnBookClick =(puja)=>{
+        // alert(1)
+        this.props.navigation.push('Booking')
     }
     render() {
-        const img = {
-            uri:
-                'https://picsum.photos/200',
-        };
-        const logo = img//require("../../../assets/logo.png");
-        const cardImage = img///require("../../../assets/drawer-cover.png");
+        
         return (
             <>
                 <SafeAreaView>
@@ -37,7 +36,7 @@ export default class Pujas extends React.Component {
                         <View >
                             {
                                 this.pujas.map((puja, i) => {
-                                    return (<PujaCard keyVal={`puja${i}`} puja={puja}></PujaCard>)
+                                    return (<PujaCard onBook={this.OnBookClick} key={`puja${i}`} puja={puja}></PujaCard>)
                                 })
                             }
                         </View>

@@ -24,8 +24,8 @@ export default class AppHeader extends Component {
 
                 <Right>
                     {this.props.right ?
-                        <Button transparent>
-                            <Icon name='menu' />
+                        <Button onPress={this.props.onRightClick} transparent>
+                            <Icon type="MaterialCommunityIcons" name='filter-outline' />
                         </Button> : null}
                 </Right>
 

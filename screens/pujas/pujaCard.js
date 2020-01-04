@@ -39,9 +39,9 @@ export default class PujaCard extends React.Component {
         const {puja} = this.props;
         return (
             <Card  >
-                <CardItem cardBody style={{ margin: 5}}>
+                <CardItem button onPress={() => this.props.onCardClick()}  cardBody style={{ margin: 5}}>
                     <Left >
-                        <Thumbnail square source={logo} />
+                        <Thumbnail  square large source={logo} />
                         <Body>
                             {/* <Text >GeekyAnts</Text> */}
                             <Text>{puja.name}</Text>
@@ -50,26 +50,16 @@ export default class PujaCard extends React.Component {
                     </Left>
                 </CardItem>
 
-                {/* <CardItem cardBody>
-                    <Image
-                        style={{
-                            resizeMode: "cover",
-                            width: null,
-                            height: 200,
-                            flex: 1
-                        }}
-                        source={cardImage}
-                    />
-                </CardItem> */}
+               
 
                 <CardItem >
-                    <Left>
+                    <Left >
                         <Button transparent>
                             <Icon active type="MaterialIcons" name="timer" />
                             <Text>2.3 Hrs</Text>
                         </Button>
                     </Left>
-                    <Body >
+                    <Body  >
                         <Button transparent>
                             {/* <Icon type="FontAwesome5" name="dollar-sign" /> */}
                             <Text>$ 4300</Text>

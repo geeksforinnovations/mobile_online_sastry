@@ -7,6 +7,8 @@ import SuccessPage from '../../screens/success/success'
 import BookingScreen from '../../screens/booking/booking'
 import OtpScreen from '../../screens/booking/otpScreen'
 import SuccessScreen from '../../screens/booking/successScreen'
+import FilterScreen from '../../screens/pujas/filterScreen'
+import CalendarScreen from '../../screens/booking/calendarScreen'
 
 
 export const HomeStack = createStackNavigator({
@@ -14,8 +16,14 @@ export const HomeStack = createStackNavigator({
         screen: Pujas,
 
     },
+    Filter:{
+        screen: FilterScreen
+    },
     Booking:{
         screen: BookingScreen
+    },
+    Calendar:{
+        screen:CalendarScreen
     },
     OTP:{
         screen:OtpScreen

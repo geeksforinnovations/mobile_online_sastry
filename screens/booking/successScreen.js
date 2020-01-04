@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Content, Text, Body, Right, Button, Icon, Input, Item, View, CardItem, Card } from 'native-base';
 import { G4IHeader } from '../header/appHeader';
+import LottieView from 'lottie-react-native';
 
 export default class SuccessScreen extends Component {
     constructor(props) {
@@ -13,22 +14,16 @@ export default class SuccessScreen extends Component {
                 {/* <Text>hello</Text> */}
                 <Content style={{ margin: 10 }}>
 
-                    <Card>
-                        <CardItem header>
-                            <Text>Ref Number : 12345 </Text>
-                        </CardItem>
-                        <CardItem>
-                            <Text>Succssfully booked your puja</Text>
-                        </CardItem>
-                       
-                    </Card>
-                    <View style={{marginTop: 20}}>
-                        <Button  onPress={() => this.props.navigation.navigate('Home')}>
-                            <Text  > Go To Home</Text>
-                        </Button>
-                    </View>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <LottieView style={{ width: 300, height: 300 }} resizeMode="cover" source={require('./animation.json')} autoPlay loop />
 
+                    </View>
+                    <Button onPress={() => this.props.navigation.navigate('Home')} style={{ justifyContent: 'center', alignItems: 'center' }} bordered>
+                        <Icon name='home' />
+                        <Text>Home</Text>
+                    </Button>
                 </Content>
+
             </Container>
 
         );

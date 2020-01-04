@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Text, Button, H2, Content, H3, View, Item, Input, Textarea } from 'native-base';
+import { Container, Text, Button, H2, Content, H3, View, Item, Input, Textarea, Icon } from 'native-base';
 import { G4IHeader } from '../header/appHeader';
 import DateTimePicker from "react-native-modal-datetime-picker";
 
@@ -41,16 +41,24 @@ export default class BookingScreen extends Component {
 
 
                     <H3 style={{ marginVertical: 10 }}> Puja Date</H3>
-                    <Button bordered onPress={this.showDateTimePicker}>
-                        <Text>{this.state.date ? this.state.date.toDateString() : `Select Date`}</Text>
-                    </Button>
+                    <View style={{ flex: 1, flexDirection: 'row', }}>
+
+                        <Button style={{ flex: 5 }} bordered onPress={this.showDateTimePicker}>
+                            <Text>{this.state.date ? this.state.date.toDateString() : `Select Date`}</Text>
+                        </Button>
+                        <Button bordered style={{ flex: 1 }} onPress={() => this.props.navigation.push('Calendar')} iconLeft transparent>
+                            <Icon type="MaterialCommunityIcons" name='calendar-check-outline' />
+
+                        </Button>
+                    </View>
+
                     <DateTimePicker
                         isVisible={this.state.isDateTimePickerVisible}
                         onConfirm={this.handleDatePicked}
                         onCancel={this.hideDateTimePicker}
                     />
 
-                    <H3 style={{ marginVertical: 10 }}> Puja Location</H3>
+                    <H3 style={{ marginVertical: 10 }}> Phone Number</H3>
                     <Item regular>
                         <Input placeholder='Phone Nuber' />
                     </Item>
@@ -85,7 +93,7 @@ export default class BookingScreen extends Component {
                     }
 
                     <View style={{ marginTop: 10, flex: 1 }}>
-                        <Button full onPress={()=> this.props.navigation.push('OTP')}>
+                        <Button full onPress={() => this.props.navigation.push('OTP')}>
                             <Text>Confirm</Text>
                         </Button>
                     </View>

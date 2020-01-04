@@ -26,17 +26,20 @@ export default class Pujas extends React.Component {
         // alert(1)
         this.props.navigation.push('Booking')
     }
+    OpenFilter =()=> {
+        this.props.navigation.push('Filter')
+    }
     render() {
         
         return (
             <>
                 <SafeAreaView>
-                    <G4IHeader left={'menu'} right={null} title={'Pujas'} {...this.props}></G4IHeader>
+                    <G4IHeader left={'menu'} right={'filter'} title={'Pujas'} {...this.props} onRightClick={this.OpenFilter}></G4IHeader>
                     <ScrollView contentInsetAdjustmentBehavior="automatic"  >
                         <View >
                             {
                                 this.pujas.map((puja, i) => {
-                                    return (<PujaCard onBook={this.OnBookClick} key={`puja${i}`} puja={puja}></PujaCard>)
+                                    return (<PujaCard onCardClick={() => this.props.navigation.push('PujaDetails')} onBook={this.OnBookClick} key={`puja${i}`} puja={puja}></PujaCard>)
                                 })
                             }
                         </View>

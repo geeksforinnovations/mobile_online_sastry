@@ -97,6 +97,11 @@ export default class BookingScreen extends Component {
                             <Text>Confirm</Text>
                         </Button>
                     </View>
+                    <View style={{ marginTop: 10, flex: 1 }}>
+                        <Button full onPress={() => this.props.navigation.push('Payment')}>
+                            <Text>Pay</Text>
+                        </Button>
+                    </View>
                 </Content>
 
             </Container>

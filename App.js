@@ -15,6 +15,13 @@ import { Container, Content, Text, StyleProvider } from 'native-base';
 // import { StyleProvider } from 'native-base';
 import getTheme from './native-base-theme/components';
 import material from './native-base-theme/variables/material';
+import stripe from 'tipsi-stripe'
+
+stripe.setOptions({
+  publishableKey: 'pk_test_T27m5sW3xaVHvlLE9oNSkVLS00fV5eO21h',
+  // merchantId: 'MERCHANT_ID', // Optional
+  androidPayMode: 'test', // Android only
+})
 const App: () => React$Node = () => {
 
   // const the

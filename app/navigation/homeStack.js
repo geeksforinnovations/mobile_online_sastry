@@ -9,6 +9,7 @@ import OtpScreen from '../../screens/booking/otpScreen'
 import SuccessScreen from '../../screens/booking/successScreen'
 import FilterScreen from '../../screens/pujas/filterScreen'
 import CalendarScreen from '../../screens/booking/calendarScreen'
+import PaymentScreen from '../../screens/payment/payment'
 
 
 export const HomeStack = createStackNavigator({
@@ -27,6 +28,9 @@ export const HomeStack = createStackNavigator({
     },
     OTP:{
         screen:OtpScreen
+    },
+    Payment:{
+        screen:PaymentScreen
     },
     Success: {
         screen: SuccessScreen

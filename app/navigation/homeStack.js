@@ -1,55 +1,52 @@
-import React from 'react'
-import { createStackNavigator } from 'react-navigation-stack'
-import PujaDetails from '../../screens/pujaDetails/pujaDetails'
-import Pujas from '../../screens/pujas/pujas'
-import UserDetails from '../../screens/userDetails/userDetails'
-import SuccessPage from '../../screens/success/success'
-import BookingScreen from '../../screens/booking/booking'
-import OtpScreen from '../../screens/booking/otpScreen'
-import SuccessScreen from '../../screens/booking/successScreen'
-import FilterScreen from '../../screens/pujas/filterScreen'
-import CalendarScreen from '../../screens/booking/calendarScreen'
-import PaymentScreen from '../../screens/payment/payment'
+import React from 'react';
+import {createStackNavigator} from 'react-navigation-stack';
+import PujaDetails from '../../screens/pujaDetails/pujaDetails';
+import Pujas from '../../screens/pujas/pujas';
+import UserDetails from '../../screens/userDetails/userDetails';
+import BookingScreen from '../../screens/booking/booking';
+import OtpScreen from '../../screens/booking/otpScreen';
+import SuccessScreen from '../../screens/booking/successScreen';
+import FilterScreen from '../../screens/pujas/filterScreen';
+import CalendarScreen from '../../screens/booking/calendarScreen';
+import PaymentScreen from '../../screens/payment/payment';
 
-
-export const HomeStack = createStackNavigator({
+export const HomeStack = createStackNavigator(
+  {
     Home: {
-        screen: Pujas,
-
+      screen: Pujas,
     },
-    Filter:{
-        screen: FilterScreen
+    Filter: {
+      screen: FilterScreen,
     },
-    Booking:{
-        screen: BookingScreen
+    Booking: {
+      screen: BookingScreen,
     },
-    Calendar:{
-        screen:CalendarScreen
+    Calendar: {
+      screen: CalendarScreen,
     },
-    OTP:{
-        screen:OtpScreen
+    OTP: {
+      screen: OtpScreen,
     },
-    Payment:{
-        screen:PaymentScreen
+    Payment: {
+      screen: PaymentScreen,
     },
     Success: {
-        screen: SuccessScreen
+      screen: SuccessScreen,
     },
     PujaDetails: {
-        screen: PujaDetails,
-
+      screen: PujaDetails,
     },
     Checkout: {
-        screen: UserDetails
+      screen: UserDetails,
     },
     // Success: {
     //     screen: SuccessPage
     // }
-},
-    {
-        headerMode: 'none', //TODO: enable this if we need react-navigation header for this stack
-        navigationOptions: {
-            headerVisible: false,
-        }
-    }
-)
+  },
+  {
+    headerMode: 'none', //TODO: enable this if we need react-navigation header for this stack
+    navigationOptions: {
+      headerVisible: false,
+    },
+  },
+);

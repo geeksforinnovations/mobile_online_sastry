@@ -36,38 +36,39 @@ export default class PujaCard extends React.Component {
                 'https://picsum.photos/200',
         };
         const logo = img
-        const {puja} = this.props;
+        const { puja } = this.props;
+        const pujaLanguages = puja.PujaLanguages.map(lang => `${lang.Language.name}, `)
         return (
             <Card  >
-                <CardItem button onPress={() => this.props.onCardClick()}  cardBody style={{ margin: 5}}>
+                <CardItem button onPress={() => this.props.onCardClick()} cardBody style={{ margin: 5 }}>
                     <Left >
-                        <Thumbnail  square large source={logo} />
+                        <Thumbnail square large source={logo} />
                         <Body>
                             {/* <Text >GeekyAnts</Text> */}
                             <Text>{puja.name}</Text>
-                            <Text note>Telugu, Hindi, Marati</Text>
+                            <Text note>{pujaLanguages}</Text>
                         </Body>
                     </Left>
                 </CardItem>
 
-               
+
 
                 <CardItem >
                     <Left >
                         <Button transparent>
                             <Icon active type="MaterialIcons" name="timer" />
-                            <Text>2.3 Hrs</Text>
+                            <Text>{puja.timeInHrs} Hrs</Text>
                         </Button>
                     </Left>
                     <Body  >
                         <Button transparent>
                             {/* <Icon type="FontAwesome5" name="dollar-sign" /> */}
-                            <Text>$ 4300</Text>
+                            <Text>$ {puja.cost}</Text>
                         </Button>
                     </Body>
                     <Right>
                         <Button onPress={this.props.onBook}>
-                            
+
                             <Text>Book</Text>
                         </Button>
                     </Right>

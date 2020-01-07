@@ -5,12 +5,14 @@ import {G4IHeader} from '../header/appHeader';
 import {Puja} from '../../models';
 import PujaCard from './pujaCard';
 import {getAllPujas} from '../../aws/apis';
+import { Spinner } from 'native-base';
 
 export default class Pujas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       availablePujas: [],
+      showLoader: false
     };
     this.pujas = [
       new Puja(1, 'Annaprasanna'),
@@ -20,25 +22,20 @@ export default class Pujas extends React.Component {
       new Puja(14, 'Annaprasanna'),
     ];
   }
-  componentDidMount() {
-    console.log('2');
-    alert('f');
-    const x = getAllPujas();
-    alert(x);
-    //   .then(
-    //     resp => {
-    //       alert(1);
-    //       this.setState({
-    //         availablePujas: resp.data,
-    //       });
-    //     },
-    //     err => {
-    //       console.log('err', err);
-    //     },
-    //   )
-    //   .catch(err => {
-    //     alert('er');
-    //   });
+ async componentDidMount() {
+  this.showLoader(true)
+    const x = await getAllPujas();
+    this.setState({
+      availablePujas: x.data,
+      showLoader: false
+    })
+   
+  }
+
+  showLoader(show){
+    this.setState({
+      showLoader: show
+    })
   }
   OnBookClick = puja => {
     // alert(1)
@@ -59,9 +56,9 @@ export default class Pujas extends React.Component {
             onRightClick={this.OpenFilter}
           />
           <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <Text>sd {this.state.availablePujas}</Text>
             <View>
-              {this.pujas.map((puja, i) => {
+              {this.state.showLoader ? <Spinner color="#e69b3a"></Spinner> : null}
+              {this.state.availablePujas.map((puja, i) => {
                 return (
                   <PujaCard
                     onCardClick={() =>

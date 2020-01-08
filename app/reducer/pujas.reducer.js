@@ -5,13 +5,15 @@ import { PujaActions } from './../actions/constants'
 // ];
 const initialState = {
   availablePujas: [],
-  selectedPuja: null
+  selectedPuja: {}
 };
 
 export default function pujas(state = initialState, action = {}) {
   switch (action.type) {
     case PujaActions.UPDATE_ALL_PUJAS:
       return { ...state, availablePujas: action.pujas }
+      case PujaActions.UPDATE_SELECTED_PUJA:
+        return { ...state, selectedPuja: action.puja }
     default:
       return state;
 

@@ -6,7 +6,7 @@ export const updateAllPujas = (pujas) => ({
 })
 
 export const updateSelectedPuja = (puja) => ({
-    type: PujaActions.UPDATE_ALL_PUJAS,
+    type: PujaActions.UPDATE_SELECTED_PUJA,
     puja: puja
 })
 

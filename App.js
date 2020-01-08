@@ -7,16 +7,15 @@
  */
 
 import React from 'react';
-
 import RootApp from './screens/sidebar/sidebar';
-
-import {StyleProvider} from 'native-base';
-// import { StyleProvider } from 'native-base';
+import { StyleProvider } from 'native-base';
 import getTheme from './native-base-theme/components';
 import material from './native-base-theme/variables/material';
 import stripe from 'tipsi-stripe';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws/configure';
+import store from './app/store'
+import {Provider} from 'react-redux'
 
 Amplify.configure(awsconfig);
 stripe.setOptions({
@@ -27,9 +26,12 @@ stripe.setOptions({
 const App: () => React$Node = () => {
   // const the
   return (
-    <StyleProvider style={getTheme(material)}>
-      <RootApp />
-    </StyleProvider>
+    <Provider store={store}>
+      <StyleProvider style={getTheme(material)}>
+        <RootApp />
+      </StyleProvider>
+    </Provider>
+
   );
 };
 export default App;

@@ -2,21 +2,21 @@ import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {G4IHeader} from '../header/appHeader';
 import {Container, Content, Accordion} from 'native-base';
-import { getAllFAQs } from '../../aws/apis';
+import {getAllFAQs} from '../../app/services';
 
 export default class HowWorksScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
-      availableFAQs : []
-    }
+    this.state = {
+      availableFAQs: [],
+    };
   }
 
- async componentDidMount(){
-const c = await getAllFAQs()
-this.setState({
-  availableFAQs:c.data
-})
+  async componentDidMount() {
+    const c = await getAllFAQs();
+    this.setState({
+      availableFAQs: c.data,
+    });
   }
 
   render() {
@@ -48,12 +48,12 @@ this.setState({
     //   },
     // ];
 
-    const data = this.state.availableFAQs.map(faq=> {
+    const data = this.state.availableFAQs.map(faq => {
       return {
         title: faq.question,
-        content:faq.answer
-      }
-    })
+        content: faq.answer,
+      };
+    });
     return (
       <>
         <SafeAreaView>
@@ -61,11 +61,7 @@ this.setState({
           <ScrollView contentInsetAdjustmentBehavior="automatic">
             <Container>
               <Content style={{margin: 5}}>
-                <Accordion
-                  dataArray={data}
-                  icon="add"
-                  expandedIcon="remove"
-                />
+                <Accordion dataArray={data} icon="add" expandedIcon="remove" />
               </Content>
             </Container>
           </ScrollView>

@@ -1,37 +1,40 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View, Text } from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
+import {connect} from 'react-redux';
 
-import { G4IHeader } from '../header/appHeader';
-import { Puja } from '../../models';
+// Components
+import {G4IHeader} from '../header/appHeader';
 import PujaCard from './pujaCard';
-import { getAllPujas } from '../../aws/apis';
-import { Spinner } from 'native-base';
-import { updateAllPujas, updateSelectedPuja } from '../../app/actions/pujas.actions'
-import { connect } from 'react-redux'
+import {Spinner} from 'native-base';
+
+//Methods
+import {
+  updateAllPujas,
+  updateSelectedPuja,
+} from '../../app/actions/pujas.actions';
+import {getAllPujas} from '../../app/services';
 
 class Pujas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoader: false
+      showLoader: false,
     };
-
   }
   async componentDidMount() {
-    this.showLoader(true)
+    this.showLoader(true);
     const x = await getAllPujas();
-    this.props.updateAllPujas(x.data)
+    this.props.updateAllPujas(x);
     this.setState({
       // availablePujas: x.data,
-      showLoader: false
-    })
-
+      showLoader: false,
+    });
   }
 
   showLoader(show) {
     this.setState({
-      showLoader: show
-    })
+      showLoader: show,
+    });
   }
   OnBookClick = puja => {
     // alert(1)
@@ -53,16 +56,14 @@ class Pujas extends React.Component {
           />
           <ScrollView contentInsetAdjustmentBehavior="automatic">
             <View>
-              {this.state.showLoader ? <Spinner color="#e69b3a"></Spinner> : null}
+              {this.state.showLoader ? <Spinner color="#e69b3a" /> : null}
               {this.props.availablePujas.map((puja, i) => {
                 return (
                   <PujaCard
-                    onCardClick={() =>
-                      {
-                        this.props.updateSelectedPuja(puja)
-                        this.props.navigation.push('PujaDetails')
-                      }
-                    }
+                    onCardClick={() => {
+                      this.props.updateSelectedPuja(puja);
+                      this.props.navigation.push('PujaDetails');
+                    }}
                     onBook={this.OnBookClick}
                     key={`puja${i}`}
                     puja={puja}
@@ -78,12 +79,15 @@ class Pujas extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  availablePujas: state.pujas.availablePujas
-})
+  availablePujas: state.pujas.availablePujas,
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateAllPujas: (pujas) => dispatch(updateAllPujas(pujas)),
-  updateSelectedPuja: (puja) => dispatch(updateSelectedPuja(puja))
-})
+  updateAllPujas: pujas => dispatch(updateAllPujas(pujas)),
+  updateSelectedPuja: puja => dispatch(updateSelectedPuja(puja)),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pujas);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Pujas);

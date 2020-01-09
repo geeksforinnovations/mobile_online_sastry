@@ -1,80 +1,67 @@
 import React from 'react';
-import {
-
-    View,
-    Image,
-} from 'react-native';
+import {View, Image} from 'react-native';
 // import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 import {
-    Container,
-    Header,
-    Title,
-    Content,
-    Button,
-    Icon,
-    Card,
-    CardItem,
-    Text,
-    Thumbnail,
-    Left,
-    Body,
-    Right
-} from "native-base";
-
-
-
-
+  Button,
+  Icon,
+  Card,
+  CardItem,
+  Text,
+  Thumbnail,
+  Left,
+  Body,
+  Right,
+} from 'native-base';
 
 export default class PujaCard extends React.Component {
-    constructor(props) {
-        super(props)
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        const img = {
-            uri:
-                'https://picsum.photos/200',
-        };
-        const logo = img
-        const { puja } = this.props;
-        const pujaLanguages = puja.PujaLanguages.map(lang => `${lang.Language.name}, `)
-        return (
-            <Card  >
-                <CardItem button onPress={() => this.props.onCardClick()} cardBody style={{ margin: 5 }}>
-                    <Left >
-                        <Thumbnail square large source={logo} />
-                        <Body>
-                            {/* <Text >GeekyAnts</Text> */}
-                            <Text>{puja.name}</Text>
-                            <Text note>{pujaLanguages}</Text>
-                        </Body>
-                    </Left>
-                </CardItem>
+  render() {
+    const img = {
+      uri: 'https://picsum.photos/200',
+    };
+    const logo = img;
+    const {puja} = this.props;
 
+    return (
+      <Card>
+        <CardItem
+          button
+          onPress={() => this.props.onCardClick()}
+          cardBody
+          style={{margin: 5}}>
+          <Left>
+            <Thumbnail square large source={logo} />
+            <Body>
+              {/* <Text >GeekyAnts</Text> */}
+              <Text>{puja.name}</Text>
+              <Text note>{puja.getLanguageString()}</Text>
+            </Body>
+          </Left>
+        </CardItem>
 
-
-                <CardItem >
-                    <Left >
-                        <Button transparent>
-                            <Icon active type="MaterialIcons" name="timer" />
-                            <Text>{puja.timeInHrs} Hrs</Text>
-                        </Button>
-                    </Left>
-                    <Body  >
-                        <Button transparent>
-                            {/* <Icon type="FontAwesome5" name="dollar-sign" /> */}
-                            <Text>$ {puja.cost}</Text>
-                        </Button>
-                    </Body>
-                    <Right>
-                        <Button onPress={this.props.onBook}>
-
-                            <Text>Book</Text>
-                        </Button>
-                    </Right>
-                </CardItem>
-            </Card>
-        );
-    }
-
+        <CardItem>
+          <Left>
+            <Button transparent>
+              <Icon active type="MaterialIcons" name="timer" />
+              <Text>{puja.timeInHrs} Hrs</Text>
+            </Button>
+          </Left>
+          <Body>
+            <Button transparent>
+              {/* <Icon type="FontAwesome5" name="dollar-sign" /> */}
+              <Text>$ {puja.cost}</Text>
+            </Button>
+          </Body>
+          <Right>
+            <Button onPress={this.props.onBook}>
+              <Text>Book</Text>
+            </Button>
+          </Right>
+        </CardItem>
+      </Card>
+    );
+  }
 }

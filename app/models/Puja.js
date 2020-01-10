@@ -1,3 +1,4 @@
+import {isArray, isDefined} from '../utils/validator';
 export default class Puja {
   constructor(
     id = null,
@@ -34,8 +35,16 @@ export default class Puja {
 
   // Methods
 
-  getLanguageString() {
+  get languageString() {
     const languages = this.languages;
     return languages.map(lang => `${lang.name} `);
+  }
+
+  get defaultLanguageId() {
+    return isDefined(this.languages) &&
+      isArray(this.languages) &&
+      this.languages.length > 0
+      ? this.languages[0].id
+      : null;
   }
 }

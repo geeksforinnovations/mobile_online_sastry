@@ -38,6 +38,7 @@ class Pujas extends React.Component {
   }
   OnBookClick = puja => {
     // alert(1)
+    this.props.updateSelectedPuja(puja);
     this.props.navigation.push('Booking');
   };
   OpenFilter = () => {
@@ -64,7 +65,7 @@ class Pujas extends React.Component {
                       this.props.updateSelectedPuja(puja);
                       this.props.navigation.push('PujaDetails');
                     }}
-                    onBook={this.OnBookClick}
+                    onBook={() => this.OnBookClick(puja)}
                     key={`puja${i}`}
                     puja={puja}
                   />

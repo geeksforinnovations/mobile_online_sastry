@@ -24,7 +24,7 @@ class PujaDetails extends Component {
       uri: 'https://picsum.photos/200',
     };
     const {puja} = this.props;
-    const pujaLanguages = puja.getLanguageString();
+    const pujaLanguages = puja.languageString;
     return (
       <Container>
         <G4IHeader

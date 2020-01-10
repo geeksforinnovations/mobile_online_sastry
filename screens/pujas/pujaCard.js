@@ -37,7 +37,7 @@ export default class PujaCard extends React.Component {
             <Body>
               {/* <Text >GeekyAnts</Text> */}
               <Text>{puja.name}</Text>
-              <Text note>{puja.getLanguageString()}</Text>
+              <Text note>{puja.languageString}</Text>
             </Body>
           </Left>
         </CardItem>

@@ -194,7 +194,7 @@ export default {
   tabBarTextSize: platform === PLATFORM.IOS ? 14 : 11,
   activeTab: platform === PLATFORM.IOS ? '#007aff' : '#fff',
   sTabBarActiveTextColor: '#e69b3a',
-  tabBarActiveTextColor: platform === PLATFORM.IOS ? '#007aff' : '#fff',
+  tabBarActiveTextColor: platform === PLATFORM.IOS ? '#007aff' : '#ffffff',
   tabActiveBgColor: platform === PLATFORM.IOS ? '#cde1f9' : '#e69b3a',
 
   // Header

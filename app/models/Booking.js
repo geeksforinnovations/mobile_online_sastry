@@ -1,4 +1,5 @@
 import validator from 'validator';
+import { isNullOrEmpty } from '../utils/validator';
 
 export default class Booking {
   constructor(
@@ -42,7 +43,7 @@ export default class Booking {
 
   isValidToBook() {
     //return validator.isEmail();
-    return '';
+    return !(isNullOrEmpty(this.name) || isNullOrEmpty(this.phoneNumber) || isNullOrEmpty(this.bookingDate) || isNullOrEmpty(this.videoCallUsername));
   }
 
   isValidPhone() {

@@ -11,11 +11,14 @@ import {
   Textarea,
   Icon,
   Picker,
+  Footer,
+  FooterTab,
 } from 'native-base';
 import {G4IHeader} from '../header/appHeader';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {Booking} from '../../app/models';
 import {connect} from 'react-redux';
+import { updateNewBooking } from '../../app/actions/bookings.action';
 
 class BookingScreen extends Component {
   constructor(props) {
@@ -91,6 +94,10 @@ class BookingScreen extends Component {
     this.updateBooking(booking);
   };
 
+  onConfirmBooking = () => {
+    this.props.updateNewBooking(this.state.booking)
+    this.props.navigation.push('OTP')
+  }
   render() {
     const {booking} = this.state;
     const {selectedPuja} = this.props;
@@ -171,9 +178,9 @@ class BookingScreen extends Component {
               mode="dropdown"
               selectedValue={booking.languageId}
               onValueChange={this.onLanguageSelect}>
-              {languages.map(language => {
+              {languages.map((language, i) => {
                 return (
-                  <Picker.Item label={language.name} value={language.id} />
+                  <Picker.Item key={`lang_${i}`} label={language.name} value={language.id} />
                 );
               })}
             </Picker>
@@ -272,21 +279,28 @@ class BookingScreen extends Component {
             </>
           )}
 
-          <View style={{marginTop: 10, flex: 1}}>
-            <Button full onPress={() => this.props.navigation.push('OTP')}>
+          {/* <View style={{marginTop: 10, flex: 1}}>
+            <Button disabled={!this.state.booking.isValidToBook()} full onPress={this.onConfirmBooking}>
               <Text>Confirm</Text>
             </Button>
-          </View>
+          </View> */}
           {/* <View style={{marginTop: 10, flex: 1}}>
             <Button full onPress={() => this.props.navigation.push('Payment')}>
               <Text>Pay</Text>
             </Button>
           </View> */}
-          <View>
+          {/* <View>
             <Text>{JSON.stringify(booking)}</Text>
             <Text>{JSON.stringify(this.props.selectedPuja)}</Text>
-          </View>
+          </View> */}
         </Content>
+        <Footer>
+            <FooterTab>
+            <Button disabled={!this.state.booking.isValidToBook()} full onPress={this.onConfirmBooking}>
+              <Text>Confirm</Text>
+            </Button>
+            </FooterTab>
+          </Footer>
       </Container>
     );
   }
@@ -296,12 +310,11 @@ const mapStateToProps = (state, ownProps) => ({
   selectedPuja: state.pujas.selectedPuja,
 });
 
-// const mapDispatchToProps = (dispatch, ownProps) => ({
-//   updateAllPujas: pujas => dispatch(updateAllPujas(pujas)),
-//   updateSelectedPuja: puja => dispatch(updateSelectedPuja(puja)),
-// });
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  updateNewBooking: pujas => dispatch(updateNewBooking(pujas)),
+});
 
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(BookingScreen);

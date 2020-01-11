@@ -1,50 +1,103 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from "react-redux";
 import {
   Container,
   Content,
   Text,
-  Body,
-  Right,
   Button,
-  Icon,
   Input,
   Item,
   View,
   CardItem,
   Card,
 } from 'native-base';
-import {G4IHeader} from '../header/appHeader';
+import { G4IHeader } from '../header/appHeader';
+import { isNullOrEmpty } from '../../app/utils/validator';
 
-export default class OtpScreen extends Component {
+class OtpScreen extends Component {
   constructor(props) {
     super(props);
+    timer = null
+    this.state = {
+      otp: null,
+      successMessage: null
+    }
+  }
+  componentWillUnmount() {
+    this.timer != null ? clearTimeout(this.timer) : null;
+
+    this.setState({
+      otp: null,
+      successMessage: null
+    })
+  }
+
+  isValidOtp = () => {
+    return !isNullOrEmpty(this.state.otp)
+  }
+
+  setOtp = (otp) => {
+    this.setState({ otp })
+  }
+
+  isValidateActionDisabled = () => {
+    return !this.isValidOtp()
+  }
+  showSuccess = (successMessage) => {
+    this.setState({ successMessage })
+  }
+
+  onConfirmPress = () => {
+    this.setState({ successMessage: 'OTP Verified' })
+
+    this.timer = setTimeout(() => {
+      this.props.navigation.push('Payment')
+    }, 2000)
+
   }
   render() {
     return (
       <Container>
         <G4IHeader left={'back'} right={null} title={'OTP'} {...this.props} />
         {/* <Text>hello</Text> */}
-        <Content style={{margin: 10}}>
+        <Content style={{ margin: 10 }}>
           <Card>
             <CardItem header>
               <Text>Enter OTP </Text>
             </CardItem>
             <CardItem>
               <Item regular>
-                <Input bordered placeholder="OTP" />
+                <Input keyboardType="phone-pad" onChangeText={this.setOtp} bordered placeholder="OTP" />
               </Item>
             </CardItem>
             <CardItem footer>
               <Text>Wait for 60 sec for OTP</Text>
             </CardItem>
           </Card>
-          <View style={{marginTop: 20}}>
-            <Button onPress={() => this.props.navigation.push('Payment')} full>
+          <View style={{ marginTop: 20 }}>
+            <Button disabled={this.isValidateActionDisabled()} onPress={this.onConfirmPress} full>
               <Text> Confirm OTP</Text>
             </Button>
           </View>
+          <Text>{this.state.successMessage}</Text>
+          <Text>{JSON.stringify(this.props.newBooking)}</Text>
+          <Text>OTP:{JSON.stringify(this.state.otp)}</Text>
         </Content>
       </Container>
     );
   }
 }
+
+
+const mapStateToProps = (state, ownProps) => ({
+  newBooking: state.bookings.newBooking,
+});
+
+// const mapDispatchToProps = (dispatch, ownProps) => ({
+//   updateNewBooking: pujas => dispatch(updateNewBooking(pujas)),
+// });
+
+export default connect(
+  mapStateToProps,
+  null,
+)(OtpScreen);

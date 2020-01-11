@@ -1,14 +1,24 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
+import { connect } from "react-redux";
 
 import {G4IHeader} from '../header/appHeader';
 import HistoryPujaCard from './hostoryPujaCard';
 import {Text, Tab, Tabs, Container} from 'native-base';
+import { getAllByPhone } from '../../app/services/bookings.service';
+import { updateUser } from '../../app/actions/user.action';
+import { updateAvailableBookings } from "../../app/actions/bookings.action";
 
-export default class BookedPujasScreen extends React.Component {
+ class BookedPujasScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.arr = [1, 2, 2, 45, 46, 56, 56];
+    this.arr = [];
+  }
+
+  async componentDidMount(){
+    const user = this.props.user
+    const bookings = await getAllByPhone(user.phoneNumber)
+    this.props.updateAvailableBookings(bookings)
   }
 
   onCancleClick = () => {
@@ -28,15 +38,15 @@ export default class BookedPujasScreen extends React.Component {
           <Tabs>
             <Tab heading="Upcoming">
               <ScrollView contentInsetAdjustmentBehavior="automatic">
-                {this.arr.map(a => {
+                {this.props.availableBookings.map(booking => {
                   return <HistoryPujaCard onCancle={this.onCancleClick} />;
                 })}
               </ScrollView>
             </Tab>
             <Tab heading="History">
               <ScrollView contentInsetAdjustmentBehavior="automatic">
-                {this.arr.map(a => {
-                  return <HistoryPujaCard onCancle={this.onCancleClick} />;
+                {this.arr.map((a, i) => {
+                  return <HistoryPujaCard key={`history_${i}`} onCancle={this.onCancleClick} />;
                 })}
               </ScrollView>
             </Tab>
@@ -49,3 +59,17 @@ export default class BookedPujasScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  user: state.user.user,
+  availableBookings: state.bookings.availableBookings
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  updateAvailableBookings:bookings => dispatch(updateAvailableBookings(bookings))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(BookedPujasScreen);

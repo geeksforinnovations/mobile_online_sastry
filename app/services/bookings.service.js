@@ -43,7 +43,7 @@ async function confirmBooking(newBooking) {
 
 function convertBookings(bookings){
     return bookings.map(booking => {
-        return new Booking(booking.bind, Number(booking.pujaId), Number(booking.language), booking.name, booking.phoneNumber, booking.bookingDate, null, booking.pujaType, booking.videoCallUsername)
+        return new Booking(booking.id, Number(booking.pujaId), Number(booking.language), booking.name, booking.phoneNumber, booking.bookingDate, null, booking.pujaType, booking.videoCallUsername, booking.puja)
     })
 }
 

@@ -20,16 +20,17 @@ export default class HistoryPujaCard extends React.Component {
     const img = {
       uri: 'https://picsum.photos/200',
     };
+    const { booking } = this.props
     const logo = img;
     return (
       <Card>
-        <CardItem cardBody style={{margin: 5}}>
+        <CardItem cardBody style={{ margin: 5 }}>
           <Left>
             <Thumbnail square large source={logo} />
             <Body>
               {/* <Text >GeekyAnts</Text> */}
-              <Text>puja.name</Text>
-              <Text note>Telugu, Hindi, Marati</Text>
+              <Text>{booking.puja.name}</Text>
+              <Text note>Date: {booking.bookingDate}</Text>
             </Body>
           </Left>
         </CardItem>
@@ -38,12 +39,12 @@ export default class HistoryPujaCard extends React.Component {
           <Left>
             <Button transparent>
               <Icon active type="MaterialIcons" name="timer" />
-              <Text>2.3 Hrs</Text>
+              <Text>{booking.puja.timeInHrs}</Text>
             </Button>
           </Left>
           <Body>
             <Button transparent>
-              <Text>$ 4300</Text>
+              <Text>$ {booking.puja.cost}</Text>
             </Button>
           </Body>
           <Right>

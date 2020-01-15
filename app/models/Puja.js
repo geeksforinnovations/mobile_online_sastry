@@ -3,14 +3,14 @@ export default class Puja {
   constructor(
     id = null,
     name = '',
-    description,
-    about,
-    timeInHrs,
-    requiredThings,
-    pujaType,
-    cost,
-    imageId,
-    languages,
+    description ='',
+    about='',
+    timeInHrs='',
+    requiredThings=[],
+    pujaType=null,
+    cost=0,
+    imageId='',
+    languages=[],
   ) {
     this.id = id;
     this.name = name;

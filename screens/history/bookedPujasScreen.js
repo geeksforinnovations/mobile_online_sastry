@@ -1,27 +1,45 @@
 import React from 'react';
-import {ScrollView} from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import { connect } from "react-redux";
 
-import {G4IHeader} from '../header/appHeader';
+import { G4IHeader } from '../header/appHeader';
 import HistoryPujaCard from './hostoryPujaCard';
-import {Text, Tab, Tabs, Container} from 'native-base';
+import { Text, Tab, Tabs, Container } from 'native-base';
 import { getAllByPhone } from '../../app/services/bookings.service';
 import { updateUser } from '../../app/actions/user.action';
 import { updateAvailableBookings } from "../../app/actions/bookings.action";
 
- class BookedPujasScreen extends React.Component {
+class BookedPujasScreen extends React.Component {
   constructor(props) {
     super(props);
     this.arr = [];
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     const user = this.props.user
     const bookings = await getAllByPhone(user.phoneNumber)
     this.props.updateAvailableBookings(bookings)
   }
 
-  onCancleClick = () => {
+  cancleBooking=(id) =>{
+    alert('cancled')
+
+  }
+
+  onCancleClick = (id) => {
+    Alert.alert(
+      'Booking History',
+      'Do you want to cancle selected Booking',
+      [
+        { text: 'Yes', onPress: () => this.cancleBooking(id) },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        }
+      ],
+      { cancelable: false },
+    );
     this.props.navigation.push('UpdateBooking');
   };
 
@@ -39,14 +57,14 @@ import { updateAvailableBookings } from "../../app/actions/bookings.action";
             <Tab heading="Upcoming">
               <ScrollView contentInsetAdjustmentBehavior="automatic">
                 {this.props.availableBookings.map(booking => {
-                  return <HistoryPujaCard onCancle={this.onCancleClick} />;
+                  return <HistoryPujaCard booking={booking} onCancle={()=>this.onCancleClick(booking.id)} />;
                 })}
               </ScrollView>
             </Tab>
             <Tab heading="History">
               <ScrollView contentInsetAdjustmentBehavior="automatic">
                 {this.arr.map((a, i) => {
-                  return <HistoryPujaCard key={`history_${i}`} onCancle={this.onCancleClick} />;
+                  return <HistoryPujaCard key={`history_${i}`} />;
                 })}
               </ScrollView>
             </Tab>
@@ -66,7 +84,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateAvailableBookings:bookings => dispatch(updateAvailableBookings(bookings))
+  updateAvailableBookings: bookings => dispatch(updateAvailableBookings(bookings))
 });
 
 export default connect(

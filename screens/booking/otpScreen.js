@@ -13,18 +13,19 @@ import {
 } from 'native-base';
 import { G4IHeader } from '../header/appHeader';
 import { isNullOrEmpty } from '../../app/utils/validator';
+import { verifyOTP } from '../../app/services/otp.service';
 
 class OtpScreen extends Component {
   constructor(props) {
     super(props);
-    timer = null
+    // timer = null
     this.state = {
       otp: null,
       successMessage: null
     }
   }
   componentWillUnmount() {
-    this.timer != null ? clearTimeout(this.timer) : null;
+    // this.timer != null ? clearTimeout(this.timer) : null;
 
     this.setState({
       otp: null,
@@ -47,13 +48,20 @@ class OtpScreen extends Component {
     this.setState({ successMessage })
   }
 
-  onConfirmPress = () => {
-    this.setState({ successMessage: 'OTP Verified' })
-
-    this.timer = setTimeout(() => {
+  onConfirmPress = async () => {
+    const {data} = await verifyOTP(this.props.navigation.state.params.countryCode+this.props.newBooking.phoneNumber, this.state.otp)
+    if(data!= undefined){
+      this.setState({ successMessage: 'OTP Verified' })
       this.props.navigation.push('Payment')
-    }, 2000)
+    }
+    else{
+      alert('OTP Not verified. But still you can be continue to payment for now')
+      this.props.navigation.push('Payment')
+    }
+  }
 
+  skip=()=> {
+    this.props.navigation.push('Payment')
   }
   render() {
     return (
@@ -79,9 +87,15 @@ class OtpScreen extends Component {
               <Text> Confirm OTP</Text>
             </Button>
           </View>
+          <View style={{ marginTop: 20 }}>
+            <Button disabled={this.isValidateActionDisabled()} onPress={this.skip} full>
+              <Text> Skip for now</Text>
+            </Button>
+          </View>
           <Text>{this.state.successMessage}</Text>
-          <Text>{JSON.stringify(this.props.newBooking)}</Text>
+          {/* <Text>{JSON.stringify(this.props.newBooking)}</Text>
           <Text>OTP:{JSON.stringify(this.state.otp)}</Text>
+          <Text>OTP:{JSON.stringify(this.props.navigation.state.params.countryCode)}</Text> */}
         </Content>
       </Container>
     );

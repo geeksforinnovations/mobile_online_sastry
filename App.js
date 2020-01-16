@@ -8,14 +8,14 @@
 
 import React from 'react';
 import RootApp from './screens/sidebar/sidebar';
-import { StyleProvider } from 'native-base';
+import {StyleProvider, Root} from 'native-base';
 import getTheme from './native-base-theme/components';
 import material from './native-base-theme/variables/material';
 import stripe from 'tipsi-stripe';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws/configure';
-import store from './app/store'
-import {Provider} from 'react-redux'
+import store from './app/store';
+import {Provider} from 'react-redux';
 
 Amplify.configure(awsconfig);
 stripe.setOptions({
@@ -28,10 +28,11 @@ const App: () => React$Node = () => {
   return (
     <Provider store={store}>
       <StyleProvider style={getTheme(material)}>
-        <RootApp />
+        <Root>
+          <RootApp />
+        </Root>
       </StyleProvider>
     </Provider>
-
   );
 };
 export default App;

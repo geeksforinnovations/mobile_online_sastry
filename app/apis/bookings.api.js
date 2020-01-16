@@ -1,22 +1,21 @@
-import { API } from 'aws-amplify';
+import {API} from 'aws-amplify';
 
 export const getAll = () => {
-    return API.get('dev', 'Booking');
+  return API.get('dev', 'Booking');
 };
 
-export const getByPhone = (phoneNumber) => {
-    return API.get('dev', `Booking/${phoneNumber}`);
+export const getByPhone = phoneNumber => {
+  return API.get('dev', `Booking/${phoneNumber}`);
 };
 
-export const createBooking = (body) => {
-    body.addressLine1= 'test',
-    body.addressLine2='test'
-    body.language = body.languageId.toString()
-    // body.bookingDate = body.bookingDate.toString()
-    console.log('Request Body', body)
-    let myInit = {
-        body,
-        headers: {} // OPTIONAL
-    }
-    return API.post('dev', 'Booking', myInit);
+export const createBooking = body => {
+  (body.addressLine1 = 'test'), (body.addressLine2 = 'test');
+  body.language = body.languageId.toString();
+  // body.bookingDate = body.bookingDate.toString()
+  console.log('Request Body', body);
+  let myInit = {
+    body,
+    headers: {}, // OPTIONAL
+  };
+  return API.post('dev', 'Booking', myInit);
 };

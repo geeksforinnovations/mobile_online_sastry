@@ -1,5 +1,5 @@
 import validator from 'validator';
-import { isNullOrEmpty } from '../utils/validator';
+import {isNullOrEmpty} from '../utils/validator';
 import Puja from './Puja';
 
 export default class Booking {
@@ -13,7 +13,7 @@ export default class Booking {
     address,
     pujaType,
     videoCallUsername,
-    puja
+    puja,
   ) {
     this.id = id;
     this.pujaId = pujaId;
@@ -24,7 +24,18 @@ export default class Booking {
     this.address = address;
     this.pujaType = pujaType;
     this.videoCallUsername = videoCallUsername;
-    this.puja = new Puja(puja.id,puja.name,null,null,puja.timeInHrs,null,puja.pujaType, puja.cost, null, [])
+    this.puja = new Puja(
+      puja.id,
+      puja.name,
+      null,
+      null,
+      puja.timeInHrs,
+      null,
+      puja.pujaType,
+      puja.cost,
+      null,
+      [],
+    );
   }
   isNewPuja() {
     return this.id === null;
@@ -46,7 +57,12 @@ export default class Booking {
 
   isValidToBook() {
     //return validator.isEmail();
-    return !(isNullOrEmpty(this.name) || isNullOrEmpty(this.phoneNumber) || isNullOrEmpty(this.bookingDate) || isNullOrEmpty(this.videoCallUsername));
+    return !(
+      isNullOrEmpty(this.name) ||
+      isNullOrEmpty(this.phoneNumber) ||
+      isNullOrEmpty(this.bookingDate) ||
+      isNullOrEmpty(this.videoCallUsername)
+    );
   }
 
   isValidPhone() {
@@ -64,7 +80,7 @@ export default class Booking {
     address = null,
     pujaType = null,
     videoCallUsername = null,
-    puja = new Puja()
+    puja = new Puja(),
   ) {
     return new Booking(
       id,
@@ -76,7 +92,7 @@ export default class Booking {
       address,
       pujaType,
       videoCallUsername,
-      puja
+      puja,
     );
   }
 

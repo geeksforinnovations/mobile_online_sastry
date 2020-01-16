@@ -1,5 +1,5 @@
 import {API} from 'aws-amplify';
 
-export const getAll = () => {
-  return API.get('dev', 'faqs');
+export const getAllFAQs = async () => {
+  return await API.get('dev', 'faqs');
 };

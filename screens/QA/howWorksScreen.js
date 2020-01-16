@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {G4IHeader} from '../header/appHeader';
 import {Container, Content, Accordion} from 'native-base';
-import {getAllFAQs} from '../../app/services';
+import {getAllFAQs} from '../../app/apis';
 
 export default class HowWorksScreen extends React.Component {
   constructor(props) {

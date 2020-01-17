@@ -103,7 +103,11 @@ class PaymentScreen extends Component {
       this.toggleLoader(false);
       this.props.updateUser(user);
       this.props.navigation.navigate('Success');
-    });
+    }, err=> {
+      console.error('booking err', err)
+    }).catch(err=> {
+      console.error('catch:booking err', err)
+    })
   };
   handleFieldParamsChange = (valid, params) => {
     this.setState({

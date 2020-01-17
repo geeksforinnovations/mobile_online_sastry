@@ -111,6 +111,7 @@ class BookingScreen extends Component {
     const response = await sendOTP(
       this.state.selecedCountry + this.state.booking.phoneNumber,
     );
+    console.log('otp response :', response)
     this.showToaster();
     //console.log('OTP send resp', response)
     this.props.navigation.push('OTP', { countryCode: this.state.selecedCountry });

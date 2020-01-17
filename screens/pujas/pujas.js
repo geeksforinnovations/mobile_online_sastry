@@ -1,99 +1,94 @@
 import React from 'react';
+import {SafeAreaView, ScrollView, View} from 'react-native';
+import {connect} from 'react-redux';
+
+// Components
+import {G4IHeader} from '../header/appHeader';
+import PujaCard from './pujaCard';
+import {Spinner} from 'native-base';
+
+//Methods
 import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    View,
-    Text,
-    StatusBar,
-} from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+  updateAllPujas,
+  updateSelectedPuja,
+} from '../../app/actions/pujas.actions';
+import {getAllPujas} from '../../app/services';
 
+class Pujas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showLoader: false,
+    };
+  }
+  async componentDidMount() {
+    this.showLoader(true);
+    const x = await getAllPujas();
+    this.props.updateAllPujas(x);
+    this.setState({
+      // availablePujas: x.data,
+      showLoader: false,
+    });
+  }
 
-import {
-    LearnMoreLinks,
-    Colors,
-    DebugInstructions,
-    ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import AppHeader from '../header/appHeader';
-
-
-export default class Pujas extends React.Component {
-    constructor(props){
-        super(props)
-    }
-    render() {
-        return (
-            <>
-                {/* <StatusBar barStyle="dark-content" /> */}
-                <SafeAreaView>
-                    <AppHeader left={'menu'} right={null} title={'Pujas'} {...this.props}></AppHeader>
-                    <ScrollView
-                        contentInsetAdjustmentBehavior="automatic"
-                        style={styles.scrollView}>
-
-                        <View style={styles.body}>
-
-                            <View style={styles.sectionContainer}>
-                                <Text style={styles.sectionTitle}>this is all pujas</Text>
-                                <Button
-
-                                    onPress={() => this.props.navigation.navigate('PujaDetails')}
-                                >
-                                    <Text style={styles.sectionTitle}>Go to PujaDetails</Text>
-                                </Button>
-                            </View>
-                        </View>
-                    </ScrollView>
-                </SafeAreaView>
-            </>
-        );
-    }
-
+  showLoader(show) {
+    this.setState({
+      showLoader: show,
+    });
+  }
+  OnBookClick = puja => {
+    // alert(1)
+    this.props.updateSelectedPuja(puja);
+    this.props.navigation.push('Booking');
+  };
+  OpenFilter = () => {
+    this.props.navigation.push('Filter');
+  };
+  render() {
+    return (
+      <>
+        <SafeAreaView>
+          <G4IHeader
+            left={'menu'}
+            right={'filter'}
+            title={'Pujas'}
+            {...this.props}
+            onRightClick={this.OpenFilter}
+          />
+          <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <View>
+              {this.state.showLoader ? <Spinner color="#e69b3a" /> : null}
+              {this.props.availablePujas.map((puja, i) => {
+                return (
+                  <PujaCard
+                    onCardClick={() => {
+                      this.props.updateSelectedPuja(puja);
+                      this.props.navigation.push('PujaDetails');
+                    }}
+                    onBook={() => this.OnBookClick(puja)}
+                    key={`puja${i}`}
+                    puja={puja}
+                  />
+                );
+              })}
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </>
+    );
+  }
 }
 
-
-const styles = StyleSheet.create({
-    scrollView: {
-        backgroundColor: Colors.lighter,
-
-    },
-    engine: {
-        position: 'absolute',
-        right: 0,
-    },
-    body: {
-        backgroundColor: Colors.white,
-        // marginTop:50,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    sectionContainer: {
-        marginTop: 32,
-        paddingHorizontal: 24,
-    },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: Colors.black,
-    },
-    sectionDescription: {
-        marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
-        color: Colors.dark,
-    },
-    highlight: {
-        fontWeight: '700',
-    },
-    footer: {
-        color: Colors.dark,
-        fontSize: 12,
-        fontWeight: '600',
-        padding: 4,
-        paddingRight: 12,
-        textAlign: 'right',
-    },
+const mapStateToProps = (state, ownProps) => ({
+  availablePujas: state.pujas.availablePujas,
 });
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  updateAllPujas: pujas => dispatch(updateAllPujas(pujas)),
+  updateSelectedPuja: puja => dispatch(updateSelectedPuja(puja)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Pujas);

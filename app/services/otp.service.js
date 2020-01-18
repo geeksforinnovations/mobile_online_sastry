@@ -15,4 +15,9 @@ async function verifyOTP(phoneNumber, otp) {
 
 }
 
-export { sendOTP, verifyOTP };
+function isValidOTP(otp) {
+  return otp.status === 'approved'
+
+}
+
+export { sendOTP, verifyOTP , isValidOTP};

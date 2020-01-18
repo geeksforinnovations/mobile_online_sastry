@@ -1,41 +1,35 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, View} from 'react-native';
-import {connect} from 'react-redux';
+import { SafeAreaView, ScrollView, View , RefreshControl} from 'react-native';
+import { connect } from 'react-redux';
 
 // Components
-import {G4IHeader} from '../header/appHeader';
+import { G4IHeader } from '../header/appHeader';
 import PujaCard from './pujaCard';
-import {Spinner} from 'native-base';
-
+// import {Spinner} from 'native-base';
+import Spinner from 'react-native-loading-spinner-overlay';
 //Methods
 import {
   updateAllPujas,
   updateSelectedPuja,
 } from '../../app/actions/pujas.actions';
-import {getAllPujas} from '../../app/services';
+import { getAllPujas } from '../../app/services';
+import {showSpinner, hideSpinner} from '../../app/actions/app.actions'
 
 class Pujas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoader: false,
+      refreshing: false
     };
   }
   async componentDidMount() {
-    this.showLoader(true);
+    this.props.showSpinner("loading Pujas..")
     const x = await getAllPujas();
     this.props.updateAllPujas(x);
-    this.setState({
-      // availablePujas: x.data,
-      showLoader: false,
-    });
+    this.props.hideSpinner()
   }
 
-  showLoader(show) {
-    this.setState({
-      showLoader: show,
-    });
-  }
+
   OnBookClick = puja => {
     // alert(1)
     this.props.updateSelectedPuja(puja);
@@ -44,7 +38,23 @@ class Pujas extends React.Component {
   OpenFilter = () => {
     this.props.navigation.push('Filter');
   };
+  showRefresh =() => {
+    this.setState({
+      // availablePujas: x.data,
+      refreshing: true,
+    });
+  }
+  onRefresh = async () => {
+    this.showRefresh()
+    const x = await getAllPujas();
+    this.props.updateAllPujas(x);
+    this.setState({
+      refreshing: false,
+    });
+  }
   render() {
+    const {refreshing} = this.state;
+    const {spinner} = this.props;
     return (
       <>
         <SafeAreaView>
@@ -55,9 +65,15 @@ class Pujas extends React.Component {
             {...this.props}
             onRightClick={this.OpenFilter}
           />
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
+          <ScrollView contentInsetAdjustmentBehavior="automatic"
+          RefreshControl
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
+          }
+          
+          >
             <View>
-              {this.state.showLoader ? <Spinner color="#e69b3a" /> : null}
+              <Spinner textContent={spinner.message} visible={spinner.show} color="#e69b3a" />
               {this.props.availablePujas.map((puja, i) => {
                 return (
                   <PujaCard
@@ -81,11 +97,14 @@ class Pujas extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   availablePujas: state.pujas.availablePujas,
+  spinner: state.app.spinner
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   updateAllPujas: pujas => dispatch(updateAllPujas(pujas)),
   updateSelectedPuja: puja => dispatch(updateSelectedPuja(puja)),
+  showSpinner: message=> dispatch(showSpinner(message)),
+  hideSpinner:() => dispatch(hideSpinner())
 });
 
 export default connect(

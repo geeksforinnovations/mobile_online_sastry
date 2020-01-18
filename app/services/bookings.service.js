@@ -1,4 +1,4 @@
-import { createBooking as postBooking, getAll, getByPhone } from "../apis/bookings.api";
+import { createBooking as postBooking, getAll, getByPhone, cancelBooking , updateBooking} from "../apis";
 import { Booking } from "../models";
 
 // returns all pujas with modal object
@@ -18,16 +18,14 @@ async function createBooking(booking) {
 }
 
 
-async function getAllByPhnumber() {
-    const pujas = await fetchAll();
+
+
+async function resheduleBooking(booking) {
+   return await updateBooking(booking);
 }
 
-async function updateBooking() {
-    const pujas = await fetchAll();
-}
-
-async function cancleBooking() {
-    const pujas = await fetchAll();
+async function cancleBooking(id) {
+    return await cancelBooking(id);
 }
 
 async function confirmBooking(newBooking) {
@@ -49,4 +47,4 @@ function convertBookings(bookings){
 
 
 
-export { createBooking, getAllBookings, getAllByPhnumber, updateBooking, cancleBooking, confirmBooking, getAllByPhone }
+export { createBooking, getAllBookings, resheduleBooking, cancleBooking, confirmBooking, getAllByPhone }

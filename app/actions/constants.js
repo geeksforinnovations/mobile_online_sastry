@@ -14,6 +14,10 @@ export class BookingActions {
 export class UserActions {
   static SET_USER='SET_USER'
 }
+
+export class AppActions {
+  static SET_SPINNER='SET_SPINNER'
+}
   
   // export default ActionNames;
   

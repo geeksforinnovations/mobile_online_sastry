@@ -13,3 +13,9 @@ export const updateAvailableBookings = (availableBookings) => ({
 export const clearNewBooking = () => {
     return updateNewBooking(null)
 }
+
+export const removeBooking = (id) => (dispatch, getState) => {
+    const bookings = getState().bookings.availableBookings;
+    const filterted = bookings.filter(booking => booking.id != id)
+    dispatch(updateAvailableBookings(filterted))
+}

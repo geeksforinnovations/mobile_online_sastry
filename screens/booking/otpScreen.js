@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Container,
   Content,
@@ -12,9 +12,9 @@ import {
   Card,
   Toast,
 } from 'native-base';
-import {G4IHeader} from '../header/appHeader';
-import {isNullOrEmpty} from '../../app/utils/validator';
-import {verifyOTP} from '../../app/services/otp.service';
+import { G4IHeader } from '../header/appHeader';
+import { isNullOrEmpty } from '../../app/utils/validator';
+import { verifyOTP, isValidOTP } from '../../app/services/otp.service';
 
 class OtpScreen extends Component {
   constructor(props) {
@@ -39,14 +39,14 @@ class OtpScreen extends Component {
   };
 
   setOtp = otp => {
-    this.setState({otp});
+    this.setState({ otp });
   };
 
   isValidateActionDisabled = () => {
     return !this.isValidOtp();
   };
   showSuccess = successMessage => {
-    this.setState({successMessage});
+    this.setState({ successMessage });
   };
 
   showToaster = () => {
@@ -58,16 +58,16 @@ class OtpScreen extends Component {
   };
 
   onConfirmPress = async () => {
-    const {data} = await verifyOTP(
+    const { data } = await verifyOTP(
       this.props.navigation.state.params.countryCode +
-        this.props.newBooking.phoneNumber,
+      this.props.newBooking.phoneNumber,
       this.state.otp,
     );
     console.log('Verify OTP Data', data);
-    if (data !== undefined) {
+    if (isValidOTP(data)) {
       this.showToaster();
-      this.setState({successMessage: 'OTP Verified'});
-      this.props.navigation.push('Payment', {id: this.props.selectedPuja.id});
+      this.setState({ successMessage: 'OTP Verified' });
+      this.props.navigation.push('Payment', { id: this.props.selectedPuja.id });
     } else {
       alert(
         'OTP Not verified. But still you can be continue to payment for now',
@@ -84,7 +84,7 @@ class OtpScreen extends Component {
       <Container>
         <G4IHeader left={'back'} right={null} title={'OTP'} {...this.props} />
         {/* <Text>hello</Text> */}
-        <Content style={{margin: 10}}>
+        <Content style={{ margin: 10 }}>
           <Card>
             <CardItem header>
               <Text>Enter OTP </Text>
@@ -92,6 +92,7 @@ class OtpScreen extends Component {
             <CardItem>
               <Item regular>
                 <Input
+                  maxLength={4}
                   keyboardType="phone-pad"
                   onChangeText={this.setOtp}
                   bordered
@@ -103,7 +104,7 @@ class OtpScreen extends Component {
               <Text>Wait for 60 sec for OTP</Text>
             </CardItem>
           </Card>
-          <View style={{marginTop: 20}}>
+          <View style={{ marginTop: 20 }}>
             <Button
               disabled={this.isValidateActionDisabled()}
               onPress={this.onConfirmPress}
@@ -111,18 +112,14 @@ class OtpScreen extends Component {
               <Text> Confirm OTP</Text>
             </Button>
           </View>
-          <View style={{marginTop: 20}}>
+          <View style={{ marginTop: 20 }}>
             <Button
-              disabled={this.isValidateActionDisabled()}
               onPress={this.skip}
               full>
-              <Text> Skip for now</Text>
+              <Text> Skip for now( only for dev stage)</Text>
             </Button>
           </View>
           <Text>{this.state.successMessage}</Text>
-          {/* <Text>{JSON.stringify(this.props.newBooking)}</Text>
-          <Text>OTP:{JSON.stringify(this.state.otp)}</Text>
-          <Text>OTP:{JSON.stringify(this.props.navigation.state.params.countryCode)}</Text> */}
         </Content>
       </Container>
     );

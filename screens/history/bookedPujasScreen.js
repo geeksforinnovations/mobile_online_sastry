@@ -5,14 +5,13 @@ import { connect } from "react-redux";
 import { G4IHeader } from '../header/appHeader';
 import HistoryPujaCard from './hostoryPujaCard';
 import { Text, Tab, Tabs, Container } from 'native-base';
-import { getAllByPhone } from '../../app/services/bookings.service';
+import { getAllByPhone, cancleBooking } from '../../app/services';
 import { updateUser } from '../../app/actions/user.action';
-import { updateAvailableBookings } from "../../app/actions/bookings.action";
+import { updateAvailableBookings, removeBooking } from "../../app/actions/bookings.action";
 
 class BookedPujasScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.arr = [];
   }
 
   async componentDidMount() {
@@ -21,8 +20,12 @@ class BookedPujasScreen extends React.Component {
     this.props.updateAvailableBookings(bookings)
   }
 
-  cancleBooking=(id) =>{
-    alert('cancled')
+  cancleBooking = async (id) => {
+
+    // Enable once API is Up
+    //const response = await cancleBooking(id)
+
+    this.props.removeBooking(id)
 
   }
 
@@ -40,7 +43,7 @@ class BookedPujasScreen extends React.Component {
       ],
       { cancelable: false },
     );
-    this.props.navigation.push('UpdateBooking');
+    //this.props.navigation.push('UpdateBooking');
   };
 
   render() {
@@ -57,13 +60,13 @@ class BookedPujasScreen extends React.Component {
             <Tab heading="Upcoming">
               <ScrollView contentInsetAdjustmentBehavior="automatic">
                 {this.props.availableBookings.map(booking => {
-                  return <HistoryPujaCard booking={booking} onCancle={()=>this.onCancleClick(booking.id)} />;
+                  return <HistoryPujaCard booking={booking} onCancle={() => this.onCancleClick(booking.id)} />;
                 })}
               </ScrollView>
             </Tab>
             <Tab heading="History">
               <ScrollView contentInsetAdjustmentBehavior="automatic">
-                {this.arr.map((a, i) => {
+                {[1].map((a, i) => {
                   return <HistoryPujaCard key={`history_${i}`} />;
                 })}
               </ScrollView>
@@ -84,7 +87,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  updateAvailableBookings: bookings => dispatch(updateAvailableBookings(bookings))
+  updateAvailableBookings: bookings => dispatch(updateAvailableBookings(bookings)),
+  removeBooking: id => dispatch(removeBooking(id))
 });
 
 export default connect(

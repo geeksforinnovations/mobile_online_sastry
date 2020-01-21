@@ -58,13 +58,13 @@ class OtpScreen extends Component {
   };
 
   onConfirmPress = async () => {
-    const { data } = await verifyOTP(
+    const  data  = await verifyOTP(
       this.props.navigation.state.params.countryCode +
       this.props.newBooking.phoneNumber,
       this.state.otp,
     );
     console.log('Verify OTP Data', data);
-    if (isValidOTP(data)) {
+    if (isValidOTP(data.data)) {
       this.showToaster();
       this.setState({ successMessage: 'OTP Verified' });
       this.props.navigation.push('Payment', { id: this.props.selectedPuja.id });

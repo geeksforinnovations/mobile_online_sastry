@@ -181,6 +181,7 @@ class BookingScreen extends Component {
           </View>
 
           <DateTimePicker
+          minimumDate={new Date()}
             isVisible={this.state.isPickerVisible}
             onConfirm={this.handleDatePicked}
             onCancel={this.hideDateTimePicker}

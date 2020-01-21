@@ -14,15 +14,15 @@ export default {
     endpoints: [
       {
         name: 'dev',
-        endpoint: 'https://czla69q7ql.execute-api.us-east-1.amazonaws.com/dev/',
+        endpoint: 'https://jiu4uxhcqc.execute-api.us-east-1.amazonaws.com/dev/',
       },
       {
         name: 'stage',
-        endpoint: 'https://czla69q7ql.execute-api.us-east-1.amazonaws.com/dev/',
+        endpoint: 'https://jiu4uxhcqc.execute-api.us-east-1.amazonaws.com/dev/',
       },
       {
         name: 'prod',
-        endpoint: 'https://czla69q7ql.execute-api.us-east-1.amazonaws.com/dev/',
+        endpoint: 'https://jiu4uxhcqc.execute-api.us-east-1.amazonaws.com/dev/',
       },
     ],
   },

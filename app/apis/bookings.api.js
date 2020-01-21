@@ -13,6 +13,7 @@ export const createBooking = body => {
   body.addressLine2 = 'test';
   body.language = body.languageId.toString();
   body.requirePujaType = body.pujaType
+  body.videoCallUserName = body.videoCallUsername
   body.bookingDate = new Date(body.bookingDate).toLocaleDateString()
   let myInit = {
     body,

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Container,
   Text,
@@ -15,17 +15,17 @@ import {
   FooterTab,
   Toast,
 } from 'native-base';
-import { G4IHeader } from '../header/appHeader';
+import {G4IHeader} from '../header/appHeader';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { Booking } from '../../app/models';
-import { connect } from 'react-redux';
-import { updateNewBooking } from '../../app/actions/bookings.action';
-import { sendOTP } from '../../app/services/otp.service';
+import {Booking} from '../../app/models';
+import {connect} from 'react-redux';
+import {updateNewBooking} from '../../app/actions/bookings.action';
+import {sendOTP} from '../../app/services/otp.service';
 
 class BookingScreen extends Component {
   constructor(props) {
     super(props);
-    const { selectedPuja } = this.props;
+    const {selectedPuja} = this.props;
     this.state = {
       isPickerVisible: false,
       date: null,
@@ -33,67 +33,67 @@ class BookingScreen extends Component {
         null,
         selectedPuja.id,
         selectedPuja.defaultLanguageId,
-        null,
-        null,
-        null,
+        'mani kumar v',
+        '9700944994',
+        new Date(),
         null,
         Booking.Type.Online,
-        null,
+        'null',
       ),
-      availableCountries: [{ name: 'IN', val: '+91' }, { name: 'US', val: '+1' }],
-      selecedCountry: '+1',
+      availableCountries: [{name: 'IN', val: '+91'}, {name: 'US', val: '+1'}],
+      selecedCountry: '+91',
     };
   }
 
   showDateTimePicker = () => {
-    this.setState({ isPickerVisible: true });
+    this.setState({isPickerVisible: true});
   };
 
   hideDateTimePicker = () => {
-    this.setState({ isPickerVisible: false });
+    this.setState({isPickerVisible: false});
   };
 
   handleDatePicked = date => {
     console.log('A date has been picked:ddd ', date);
-    const { booking } = this.state;
+    const {booking} = this.state;
     booking.bookingDate = date;
     this.updateBooking(booking, false);
   };
 
   updateBooking = (booking, isPickerVisible = false) => {
-    this.setState({ booking, isPickerVisible });
+    this.setState({booking, isPickerVisible});
   };
 
   updatePujaType = pujaType => {
-    const { booking } = this.state;
+    const {booking} = this.state;
     booking.pujaType = pujaType;
     this.updateBooking(booking);
   };
   updatePhoneNumber = phoneNumber => {
     // alert(phoneNumber);
-    const { booking } = this.state;
+    const {booking} = this.state;
     booking.phoneNumber = phoneNumber;
     this.updateBooking(booking);
   };
   updateSkypeId = videoCallUsername => {
     // alert(phoneNumber);
-    const { booking } = this.state;
+    const {booking} = this.state;
     booking.videoCallUsername = videoCallUsername;
     this.updateBooking(booking);
   };
   updateAddress = address => {
     // alert(phoneNumber);
-    const { booking } = this.state;
+    const {booking} = this.state;
     booking.address = address;
     this.updateBooking(booking);
   };
   onLanguageSelect = languageId => {
-    const { booking } = this.state;
+    const {booking} = this.state;
     booking.languageId = languageId;
     this.updateBooking(booking);
   };
   updateName = name => {
-    const { booking } = this.state;
+    const {booking} = this.state;
     booking.name = name;
     this.updateBooking(booking);
   };
@@ -111,19 +111,19 @@ class BookingScreen extends Component {
     const response = await sendOTP(
       this.state.selecedCountry + this.state.booking.phoneNumber,
     );
-    console.log('otp response :', response)
+    console.log('otp response :', response);
     this.showToaster();
     //console.log('OTP send resp', response)
-    this.props.navigation.push('OTP', { countryCode: this.state.selecedCountry });
+    this.props.navigation.push('OTP', {countryCode: this.state.selecedCountry});
   };
 
   onCountrySelect = val => {
-    this.setState({ selecedCountry: val });
+    this.setState({selecedCountry: val});
   };
   render() {
-    const { booking } = this.state;
-    const { selectedPuja } = this.props;
-    const { languages } = selectedPuja;
+    const {booking} = this.state;
+    const {selectedPuja} = this.props;
+    const {languages} = selectedPuja;
     return (
       <Container>
         <G4IHeader
@@ -133,11 +133,11 @@ class BookingScreen extends Component {
           {...this.props}
         />
 
-        <Content style={{ margin: 10 }}>
-          <H3 style={{ marginVertical: 10 }}> Puja Date</H3>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
+        <Content style={{margin: 10}}>
+          <H3 style={{marginVertical: 10}}> Puja Date</H3>
+          <View style={{flex: 1, flexDirection: 'row'}}>
             <Button
-              style={{ flex: 4, justifyContent: 'flex-start' }}
+              style={{flex: 4, justifyContent: 'flex-start'}}
               bordered
               onPress={this.showDateTimePicker}>
               <Icon
@@ -168,11 +168,11 @@ class BookingScreen extends Component {
                   alignItems: 'center',
                 }}>
                 <Icon
-                  style={{ color: '#e69b3a' }}
+                  style={{color: '#e69b3a'}}
                   type="MaterialCommunityIcons"
                   name="calendar"
                 />
-                <Text style={{ fontSize: 10, color: '#e69b3a' }}>Check days</Text>
+                <Text style={{fontSize: 10, color: '#e69b3a'}}>Check days</Text>
               </View>
 
               {/* <Text>Check days</Text> */}
@@ -181,22 +181,23 @@ class BookingScreen extends Component {
           </View>
 
           <DateTimePicker
-          minimumDate={new Date()}
+            minimumDate={new Date()}
             isVisible={this.state.isPickerVisible}
             onConfirm={this.handleDatePicked}
             onCancel={this.hideDateTimePicker}
+            value={booking.bookingDate}
           />
 
-          <H3 style={{ marginVertical: 10 }}> Language</H3>
-          <Item regular style={{ borderWidth: 1, borderColor: '#e69b3a' }}>
+          <H3 style={{marginVertical: 10}}> Language</H3>
+          <Item regular style={{borderWidth: 1, borderColor: '#e69b3a'}}>
             <Icon
               active
               type="FontAwesome5"
-              style={{ color: '#e69b3a' }}
+              style={{color: '#e69b3a'}}
               name="language"
             />
             <Picker
-              style={{ color: '#e69b3a' }}
+              style={{color: '#e69b3a'}}
               note
               mode="dropdown"
               selectedValue={booking.languageId}
@@ -213,26 +214,26 @@ class BookingScreen extends Component {
             </Picker>
           </Item>
 
-          <H3 style={{ marginVertical: 10 }}> Full Name</H3>
-          <Item regular style={{ borderWidth: 1, borderColor: '#e69b3a' }}>
+          <H3 style={{marginVertical: 10}}> Full Name</H3>
+          <Item regular style={{borderWidth: 1, borderColor: '#e69b3a'}}>
             <Icon
               active
-              style={{ color: '#e69b3a' }}
+              style={{color: '#e69b3a'}}
               type="MaterialCommunityIcons"
               name="contacts"
             />
             <Input
               placeholderTextColor="#e69b3a"
-              style={{ color: '#e69b3a', borderColor: '#e69b3a' }}
+              style={{color: '#e69b3a', borderColor: '#e69b3a'}}
               value={booking.name}
               placeholder="Name"
               onChangeText={this.updateName}
             />
           </Item>
 
-          <H3 style={{ marginVertical: 10 }}> Phone Number</H3>
-          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ flex: 1 }}>Country:</Text>
+          <H3 style={{marginVertical: 10}}> Phone Number</H3>
+          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={{flex: 1}}>Country:</Text>
             <Picker
               style={{
                 color: '#e69b3a',
@@ -255,15 +256,15 @@ class BookingScreen extends Component {
                 );
               })}
             </Picker>
-            <Text style={{ flex: 2 }} />
+            <Text style={{flex: 2}} />
           </View>
-          <Item regular style={{ borderWidth: 1, borderColor: '#e69b3a' }}>
-            <Icon active style={{ color: '#e69b3a' }} name="call" />
-            <Text style={{ color: '#e69b3a' }}>{this.state.selecedCountry}</Text>
+          <Item regular style={{borderWidth: 1, borderColor: '#e69b3a'}}>
+            <Icon active style={{color: '#e69b3a'}} name="call" />
+            <Text style={{color: '#e69b3a'}}>{this.state.selecedCountry}</Text>
             <Input
               maxLength={10}
               placeholderTextColor="#e69b3a"
-              style={{ color: '#e69b3a', borderColor: '#e69b3a' }}
+              style={{color: '#e69b3a', borderColor: '#e69b3a'}}
               value={booking.phoneNumber}
               placeholder="Phone Number"
               keyboardType="phone-pad"
@@ -271,7 +272,7 @@ class BookingScreen extends Component {
             />
           </Item>
 
-          <H3 style={{ marginVertical: 10 }}> Puja Location</H3>
+          <H3 style={{marginVertical: 10}}> Puja Location</H3>
           <View
             style={{
               flex: 1,
@@ -308,32 +309,32 @@ class BookingScreen extends Component {
 
           {booking.isAtOnline() ? (
             <>
-              <H3 style={{ marginVertical: 10 }}> Skype ID</H3>
+              <H3 style={{marginVertical: 10}}> Skype ID</H3>
               <Item regular>
                 <Icon active name="logo-skype" />
                 <Input
                   onChangeText={this.updateSkypeId}
+                  value={booking.videoCallUsername}
                   autoCompleteType="username"
                   placeholder="Skype Id"
                 />
               </Item>
             </>
           ) : (
-              <>
-                <H3 style={{ marginVertical: 10 }}> Home Address</H3>
-                <Item regular>
-                  {/* <Icon active name="address" /> */}
-                  <Textarea
-                    style={{ flex: 1 }}
-                    rowSpan={5}
-                    bordered
-                    onChangeText={this.updateAddress}
-                    placeholder="Enter address for puja"
-                  />
-                </Item>
-              </>
-            )}
-
+            <>
+              <H3 style={{marginVertical: 10}}> Home Address</H3>
+              <Item regular>
+                {/* <Icon active name="address" /> */}
+                <Textarea
+                  style={{flex: 1}}
+                  rowSpan={5}
+                  bordered
+                  onChangeText={this.updateAddress}
+                  placeholder="Enter address for puja"
+                />
+              </Item>
+            </>
+          )}
         </Content>
         <Footer>
           <FooterTab>

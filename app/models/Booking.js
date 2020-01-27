@@ -13,6 +13,7 @@ export default class Booking {
     address,
     pujaType,
     videoCallUsername,
+    status,
     puja,
   ) {
     this.id = id;
@@ -24,6 +25,7 @@ export default class Booking {
     this.address = address;
     this.pujaType = pujaType;
     this.videoCallUsername = videoCallUsername;
+    this.status = status;
     this.puja = new Puja(
       puja.id,
       puja.name,
@@ -80,6 +82,7 @@ export default class Booking {
     address = null,
     pujaType = null,
     videoCallUsername = null,
+    status = 'Active',
     puja = new Puja(),
   ) {
     return new Booking(
@@ -92,6 +95,7 @@ export default class Booking {
       address,
       pujaType,
       videoCallUsername,
+      status,
       puja,
     );
   }

@@ -13,15 +13,18 @@ import {
   FooterTab,
   Card,
   CardItem,
-  Spinner,
+  // Spinner,
 } from 'native-base';
 import {G4IHeader} from '../header/appHeader';
 import stripe, {PaymentCardTextField} from 'tipsi-stripe';
 import {confirmBooking} from '../../app/services/bookings.service';
 import {connect} from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 import {updateUser} from '../../app/actions/user.action';
 import {User} from '../../app/models';
 import {payment} from '../../app/apis';
+import {showSpinner, hideSpinner} from '../../app/actions/app.actions';
 
 class PaymentScreen extends Component {
   constructor(props) {
@@ -95,19 +98,26 @@ class PaymentScreen extends Component {
   }
 
   onPaymentPress = async () => {
-    this.toggleLoader(true);
+    this.props.showSpinner('payment in progress');
     const payment = await this.continueToPayment();
+    this.props.hideSpinner();
 
-    confirmBooking(this.props.newBooking).then(booking => {
-      const user = new User(null, booking.name, booking.phoneNumber);
-      this.toggleLoader(false);
-      this.props.updateUser(user);
-      this.props.navigation.navigate('Success');
-    }, err=> {
-      console.error('booking err', err)
-    }).catch(err=> {
-      console.error('catch:booking err', err)
-    })
+    confirmBooking(this.props.newBooking)
+      .then(
+        booking => {
+          const user = new User(null, booking.name, booking.phoneNumber);
+          this.props.updateUser(user);
+          this.props.hideSpinner();
+          this.props.navigation.navigate('Success');
+        },
+        err => {
+          this.props.hideSpinner();
+          console.error('booking err', err);
+        },
+      )
+      .catch(err => {
+        console.error('catch:booking err', err);
+      });
   };
   handleFieldParamsChange = (valid, params) => {
     this.setState({
@@ -117,6 +127,7 @@ class PaymentScreen extends Component {
   };
 
   render() {
+    const {spinner} = this.props;
     return (
       <Container>
         <G4IHeader
@@ -127,6 +138,11 @@ class PaymentScreen extends Component {
         />
         {/* <Text>hello</Text> */}
         <Content style={{margin: 10}}>
+          <Spinner
+            textContent={spinner.message}
+            visible={spinner.show}
+            color="#e69b3a"
+          />
           <Card>
             <CardItem header bordered>
               <Text>Enter Card details </Text>
@@ -168,10 +184,6 @@ class PaymentScreen extends Component {
               </Text>
             </CardItem>
           </Card>
-
-          {this.state.showLoader ? (
-            <Spinner style={{marginTop: 30}} color="#e69b3a" />
-          ) : null}
         </Content>
         <Footer>
           <FooterTab>
@@ -191,10 +203,13 @@ class PaymentScreen extends Component {
 const mapStateToProps = (state, ownProps) => ({
   newBooking: state.bookings.newBooking,
   selectedPuja: state.pujas.selectedPuja,
+  spinner: state.app.spinner,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   updateUser: user => dispatch(updateUser(user)),
+  showSpinner: message => dispatch(showSpinner(message)),
+  hideSpinner: () => dispatch(hideSpinner()),
 });
 
 export default connect(

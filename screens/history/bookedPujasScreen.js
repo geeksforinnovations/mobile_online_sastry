@@ -11,6 +11,7 @@ import {updateUser} from '../../app/actions/user.action';
 import {
   updateAvailableBookings,
   removeBooking,
+  updateSelectedBooking,
 } from '../../app/actions/bookings.action';
 import {showSpinner, hideSpinner} from '../../app/actions/app.actions';
 
@@ -53,6 +54,11 @@ class BookedPujasScreen extends React.Component {
     //this.props.navigation.push('UpdateBooking');
   };
 
+  updateBooking = booking => {
+    this.props.updateSelectedBooking(booking);
+    this.props.navigation.push('UpdateBooking');
+  };
+
   render() {
     const {spinner} = this.props;
     return (
@@ -78,6 +84,7 @@ class BookedPujasScreen extends React.Component {
                     <HistoryPujaCard
                       key={`hostory_${i}`}
                       booking={booking}
+                      onCardClick={() => this.updateBooking(booking)}
                       onCancle={() => this.onCancleClick(booking.id)}
                     />
                   ) : null;
@@ -113,6 +120,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   removeBooking: id => dispatch(removeBooking(id)),
   showSpinner: message => dispatch(showSpinner(message)),
   hideSpinner: () => dispatch(hideSpinner()),
+  updateSelectedBooking: booking => dispatch(updateSelectedBooking(booking)),
 });
 
 export default connect(

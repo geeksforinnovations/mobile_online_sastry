@@ -20,11 +20,15 @@ export default class HistoryPujaCard extends React.Component {
     const img = {
       uri: 'https://picsum.photos/200',
     };
-    const { booking } = this.props
+    const {booking} = this.props;
     const logo = img;
     return (
       <Card>
-        <CardItem cardBody style={{ margin: 5 }}>
+        <CardItem
+          cardBody
+          button
+          onPress={this.props.onCardClick}
+          style={{margin: 5}}>
           <Left>
             <Thumbnail square large source={logo} />
             <Body>

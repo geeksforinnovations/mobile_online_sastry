@@ -36,5 +36,6 @@ export const updateBooking = async booking => {
   const reqBody = {
     body: booking,
   };
+  console.log('udate booking req', booking);
   return await API.patch('dev', 'Booking', reqBody);
 };

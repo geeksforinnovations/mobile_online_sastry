@@ -19,7 +19,7 @@ export default class FilterScreen extends React.Component {
     super(props);
     this.state = {
       selected: 'key1',
-      date: new Date(),
+      date: new Date().toLocaleDateString(),
       isDateTimePickerVisible: false,
     };
   }

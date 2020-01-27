@@ -1,11 +1,11 @@
 import {API} from 'aws-amplify';
 
 export const getAll = () => {
-  return API.get('dev', 'Booking');
+  return API.get('dev', 'bookings');
 };
 
 export const getByPhone = phoneNumber => {
-  return API.get('dev', `Booking/${phoneNumber}`);
+  return API.get('dev', `bookings/${phoneNumber}`);
 };
 
 export const createBooking = async body => {
@@ -21,7 +21,7 @@ export const createBooking = async body => {
     headers: {}, // OPTIONAL
   };
   try {
-    return await API.post('dev', 'Booking', myInit);
+    return await API.post('dev', 'bookings', myInit);
   } catch (er) {
     console.error('err while booking', er);
     throw er;
@@ -29,7 +29,7 @@ export const createBooking = async body => {
 };
 
 export const cancelBooking = async bookinId => {
-  return await API.put('dev', `Booking/${bookinId}`);
+  return await API.put('dev', `bookings/cancel/${bookinId}`);
 };
 
 export const updateBooking = async booking => {
@@ -37,5 +37,5 @@ export const updateBooking = async booking => {
     body: booking,
   };
   console.log('udate booking req', booking);
-  return await API.patch('dev', 'Booking', reqBody);
+  return await API.patch('dev', 'bookings', reqBody);
 };

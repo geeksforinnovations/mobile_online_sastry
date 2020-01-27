@@ -93,13 +93,31 @@ class BookedPujasScreen extends React.Component {
             </Tab>
             <Tab heading="History">
               <ScrollView contentInsetAdjustmentBehavior="automatic">
-                {[1].map((a, i) => {
-                  return <HistoryPujaCard key={`history_${i}`} />;
+              {this.props.availableBookings.map((booking, i) => {
+                  return booking.status == 'Completed' ? (
+                    <HistoryPujaCard
+                      key={`hostory_${i}`}
+                      booking={booking}
+                      onCardClick={() => this.updateBooking(booking)}
+                      onCancle={() => this.onCancleClick(booking.id)}
+                    />
+                  ) : null;
                 })}
               </ScrollView>
             </Tab>
-            <Tab heading="Cancled">
-              <Text>Booked puja screen</Text>
+            <Tab heading="Cancelled">
+            <ScrollView contentInsetAdjustmentBehavior="automatic">
+              {this.props.availableBookings.map((booking, i) => {
+                  return booking.status == 'Cancelled' ? (
+                    <HistoryPujaCard
+                      key={`hostory_${i}`}
+                      booking={booking}
+                      onCardClick={() => this.updateBooking(booking)}
+                      onCancle={() => this.onCancleClick(booking.id)}
+                    />
+                  ) : null;
+                })}
+              </ScrollView>
             </Tab>
           </Tabs>
         </Container>

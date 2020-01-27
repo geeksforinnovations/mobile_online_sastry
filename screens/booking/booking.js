@@ -21,6 +21,8 @@ import {Booking} from '../../app/models';
 import {connect} from 'react-redux';
 import {updateNewBooking} from '../../app/actions/bookings.action';
 import {sendOTP} from '../../app/services/otp.service';
+import {showSpinner, hideSpinner} from '../../app/actions/app.actions';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 class BookingScreen extends Component {
   constructor(props) {
@@ -35,7 +37,7 @@ class BookingScreen extends Component {
         selectedPuja.defaultLanguageId,
         'mani kumar v',
         '9700944994',
-        new Date(),
+        new Date().toLocaleDateString(),
         null,
         Booking.Type.Online,
         'null',
@@ -108,11 +110,13 @@ class BookingScreen extends Component {
 
   onConfirmBooking = async () => {
     this.props.updateNewBooking(this.state.booking);
+    this.props.showSpinner("sending OTP")
     const response = await sendOTP(
       this.state.selecedCountry + this.state.booking.phoneNumber,
     );
     console.log('otp response :', response);
     this.showToaster();
+    this.props.hideSpinner()
     //console.log('OTP send resp', response)
     this.props.navigation.push('OTP', {countryCode: this.state.selecedCountry});
   };
@@ -124,6 +128,7 @@ class BookingScreen extends Component {
     const {booking} = this.state;
     const {selectedPuja} = this.props;
     const {languages} = selectedPuja;
+    const {spinner} = this.props;
     return (
       <Container>
         <G4IHeader
@@ -132,6 +137,11 @@ class BookingScreen extends Component {
           title={'Booking'}
           {...this.props}
         />
+         <Spinner
+            textContent={spinner.message}
+            visible={spinner.show}
+            color="#e69b3a"
+          />
 
         <Content style={{margin: 10}}>
           <H3 style={{marginVertical: 10}}> Puja Date</H3>
@@ -145,8 +155,8 @@ class BookingScreen extends Component {
                 name="calendar-check-outline"
               />
               <Text>
-                {booking.bookingDate
-                  ? booking.bookingDate.toDateString()
+                {booking.bookingDate != null
+                  ? new Date(booking.bookingDate).toDateString()
                   : 'Select Date'}
               </Text>
             </Button>
@@ -353,10 +363,13 @@ class BookingScreen extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   selectedPuja: state.pujas.selectedPuja,
+  spinner: state.app.spinner,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   updateNewBooking: pujas => dispatch(updateNewBooking(pujas)),
+  showSpinner: message => dispatch(showSpinner(message)),
+  hideSpinner: () => dispatch(hideSpinner()),
 });
 
 export default connect(

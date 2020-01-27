@@ -39,17 +39,21 @@ class UpdateBookingScreen extends React.Component {
   };
 
   updateBooking = async () => {
+    this.props.showSpinner("re-sheduling puja")
     const a = await resheduleBooking(this.state.selectedBooking);
     console.log('update respo', a);
+    this.props.hideSpinner()
+    this.props.navigation.goBack(null)
   };
 
   hasModifiedDate = () => {
     const selectedBooking = this.props;
     const updatedBooking = this.state.selectedBooking;
-    return (
-      new Date(selectedBooking.bookingDate).toDateString() !==
-      new Date(updatedBooking.bookingDate).toDateString()
-    );
+    return true;
+    // return (
+    //   new Date(selectedBooking.bookingDate).toDateString() !==
+    //   new Date(updatedBooking.bookingDate).toDateString()
+    // );
   };
   render() {
     const {spinner} = this.props;
@@ -57,7 +61,7 @@ class UpdateBookingScreen extends React.Component {
     return (
       <>
         <Container>
-          <G4IHeader left={'menu'} title={'Update Booking'} {...this.props} />
+          <G4IHeader  title={'Update Booking'} {...this.props} />
           <Content style={{margin: 8}}>
             <ScrollView contentInsetAdjustmentBehavior="automatic">
               <Spinner
@@ -78,7 +82,7 @@ class UpdateBookingScreen extends React.Component {
                   />
                   <Text>
                     {selectedBooking.bookingDate
-                      ? new Date(selectedBooking.bookingDate).toDateString()
+                      ? new Date(selectedBooking.bookingDate).toLocaleDateString()
                       : 'Select Date'}
                   </Text>
                 </Button>

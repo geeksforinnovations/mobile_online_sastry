@@ -100,7 +100,7 @@ class PaymentScreen extends Component {
   onPaymentPress = async () => {
     this.props.showSpinner('payment in progress');
     const payment = await this.continueToPayment();
-    this.props.hideSpinner();
+    
 
     confirmBooking(this.props.newBooking)
       .then(

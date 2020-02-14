@@ -1,4 +1,4 @@
-import { sendOTP as send, verifyOTP as verify } from '../apis';
+import {sendOTP as send, verifyOTP as verify} from '../apis';
 
 // returns all pujas with modal object
 async function sendOTP(phoneNumber) {
@@ -8,16 +8,14 @@ async function sendOTP(phoneNumber) {
 async function verifyOTP(phoneNumber, otp) {
   try {
     return await verify(phoneNumber, otp);
+  } catch (error) {
+    console.error('err while sending OTP', error);
+    return error;
   }
-  catch (error) {
-    return error
-  }
-
 }
 
 function isValidOTP(otp) {
-  return otp.status === 'approved'
-
+  return otp.status === 'approved';
 }
 
-export { sendOTP, verifyOTP , isValidOTP};
+export {sendOTP, verifyOTP, isValidOTP};

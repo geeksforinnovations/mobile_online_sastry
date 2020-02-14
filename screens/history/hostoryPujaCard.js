@@ -20,17 +20,21 @@ export default class HistoryPujaCard extends React.Component {
     const img = {
       uri: 'https://picsum.photos/200',
     };
-    const { booking } = this.props
+    const { booking } = this.props;
     const logo = img;
     return (
       <Card>
-        <CardItem cardBody style={{ margin: 5 }}>
+        <CardItem
+          cardBody
+          button
+          onPress={this.props.onCardClick}
+          style={{ margin: 5 }}>
           <Left>
             <Thumbnail square large source={logo} />
             <Body>
               {/* <Text >GeekyAnts</Text> */}
               <Text>{booking.puja.name}</Text>
-              <Text note>Date: {booking.bookingDate}</Text>
+              <Text note>Date: {new Date(booking.bookingDate).toLocaleDateString()}</Text>
             </Body>
           </Left>
         </CardItem>
@@ -48,9 +52,11 @@ export default class HistoryPujaCard extends React.Component {
             </Button>
           </Body>
           <Right>
-            <Button onPress={() => this.props.onCancle()}>
+            {booking.status == 'Active' ? <Button onPress={() => this.props.onCancle()}>
               <Text>Cancle</Text>
-            </Button>
+            </Button> : null}
+            {booking.status == 'Completed' ? <Text>Completed</Text> : null}
+            {booking.status == 'Cancelled' ? <Text>Cancelled</Text> : null}
           </Right>
         </CardItem>
       </Card>

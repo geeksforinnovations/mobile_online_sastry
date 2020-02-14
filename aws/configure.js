@@ -13,8 +13,12 @@ export default {
   API: {
     endpoints: [
       {
-        name: 'dev',
+        name: 'dev1',
         endpoint: 'https://jiu4uxhcqc.execute-api.us-east-1.amazonaws.com/dev/',
+      },
+      {
+        name: 'dev',
+        endpoint: 'https://t5xovlkc3f.execute-api.us-east-1.amazonaws.com/dev/',
       },
       {
         name: 'stage',

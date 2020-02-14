@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View , RefreshControl} from 'react-native';
-import { connect } from 'react-redux';
+import {SafeAreaView, ScrollView, View, RefreshControl} from 'react-native';
+import {connect} from 'react-redux';
 
 // Components
-import { G4IHeader } from '../header/appHeader';
+import {G4IHeader} from '../header/appHeader';
 import PujaCard from './pujaCard';
 // import {Spinner} from 'native-base';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -12,23 +12,22 @@ import {
   updateAllPujas,
   updateSelectedPuja,
 } from '../../app/actions/pujas.actions';
-import { getAllPujas } from '../../app/services';
-import {showSpinner, hideSpinner} from '../../app/actions/app.actions'
+import {PujaService} from '../../app/services/pujas.service';
+import {showSpinner, hideSpinner} from '../../app/actions/app.actions';
 
 class Pujas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      refreshing: false
+      refreshing: false,
     };
   }
   async componentDidMount() {
-    this.props.showSpinner("loading Pujas..")
-    const x = await getAllPujas();
+    this.props.showSpinner('loading Pujas..');
+    const x = await PujaService.getAllPujas();
     this.props.updateAllPujas(x);
-    this.props.hideSpinner()
+    this.props.hideSpinner();
   }
-
 
   OnBookClick = puja => {
     // alert(1)
@@ -38,20 +37,21 @@ class Pujas extends React.Component {
   OpenFilter = () => {
     this.props.navigation.push('Filter');
   };
-  showRefresh =() => {
+  showRefresh = () => {
     this.setState({
       // availablePujas: x.data,
       refreshing: true,
     });
-  }
+  };
   onRefresh = async () => {
-    this.showRefresh()
-    const x = await getAllPujas();
+    this.showRefresh();
+    const x = await PujaService.getAllPujas();
     this.props.updateAllPujas(x);
+    console.log('refresh done', x);
     this.setState({
       refreshing: false,
     });
-  }
+  };
   render() {
     const {refreshing} = this.state;
     const {spinner} = this.props;
@@ -65,15 +65,21 @@ class Pujas extends React.Component {
             {...this.props}
             onRightClick={this.OpenFilter}
           />
-          <ScrollView contentInsetAdjustmentBehavior="automatic"
-          RefreshControl
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
-          }
-          
-          >
+          <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            RefreshControl
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={this.onRefresh}
+              />
+            }>
             <View>
-              <Spinner textContent={spinner.message} visible={spinner.show} color="#e69b3a" />
+              <Spinner
+                textContent={spinner.message}
+                visible={spinner.show}
+                color="#e69b3a"
+              />
               {this.props.availablePujas.map((puja, i) => {
                 return (
                   <PujaCard
@@ -97,14 +103,14 @@ class Pujas extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   availablePujas: state.pujas.availablePujas,
-  spinner: state.app.spinner
+  spinner: state.app.spinner,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   updateAllPujas: pujas => dispatch(updateAllPujas(pujas)),
   updateSelectedPuja: puja => dispatch(updateSelectedPuja(puja)),
-  showSpinner: message=> dispatch(showSpinner(message)),
-  hideSpinner:() => dispatch(hideSpinner())
+  showSpinner: message => dispatch(showSpinner(message)),
+  hideSpinner: () => dispatch(hideSpinner()),
 });
 
 export default connect(

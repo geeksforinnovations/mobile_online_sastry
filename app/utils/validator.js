@@ -11,7 +11,7 @@ function isDefined(val) {
 }
 
 function isUndefined(val) {
-  return typeof val == 'undefined';
+  return typeof val === 'undefined';
 }
 
 function isNullOrEmpty(val) {
@@ -21,4 +21,11 @@ function isArray(val) {
   return Array.isArray(val);
 }
 
-export {isPhoneNumber, isValidString, isDefined, isNullOrEmpty, isArray, isUndefined};
+export {
+  isPhoneNumber,
+  isValidString,
+  isDefined,
+  isNullOrEmpty,
+  isArray,
+  isUndefined,
+};

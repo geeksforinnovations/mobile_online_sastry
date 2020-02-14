@@ -3,6 +3,7 @@ import {SafeAreaView, ScrollView} from 'react-native';
 import {G4IHeader} from '../header/appHeader';
 import {Container, Content, Accordion} from 'native-base';
 import {getAllFAQs} from '../../app/apis';
+import {FAQService} from '../../app/services/faq.service';
 
 export default class HowWorksScreen extends React.Component {
   constructor(props) {
@@ -13,9 +14,9 @@ export default class HowWorksScreen extends React.Component {
   }
 
   async componentDidMount() {
-    const c = await getAllFAQs();
+    const faqs = await FAQService.getAllFAQs();
     this.setState({
-      availableFAQs: c.data,
+      availableFAQs: faqs,
     });
   }
 
